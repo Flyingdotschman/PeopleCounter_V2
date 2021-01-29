@@ -22,6 +22,11 @@ from time import sleep
 print("Running on {}".format(platform.system()))
 if platform.system() != "Windows":
     import RPi.GPIO as GPIO
+
+    pin_people_going = 14
+    pin_people_comming = 15
+    pin_reset_something = 12
+
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -37,9 +42,7 @@ if platform.system() != "Windows":
 
 small_window = True
 
-pin_people_going = 14
-pin_people_comming = 15
-pin_reset_something = 12
+
 
 # First Variables definition
 
