@@ -157,9 +157,11 @@ def start_osc_server():
     dispat.map("/counter/inside_minus", got_inside_minus, needs_reply_address=True)
     dispat.map("/counter/max_pus", got_maximum_plus, needs_reply_address=True)
     dispat.map("/counter/max_minus", got_maximum_minus, needs_reply_address=True)
-
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
+    try:
+        hostname = socket.gethostname()
+        local_ip = socket.gethostbyname(hostname)
+    except:
+        local_ip = "192.168.4.1"
     server = osc_server.ThreadingOSCUDPServer((local_ip, 9001), dispat)
     server.serve_forever()
 
