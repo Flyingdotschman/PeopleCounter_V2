@@ -8,13 +8,30 @@ from pythonosc import dispatcher, osc_server
 
 import threading
 
+import platform
+
 import pickle
 
 from typing import List, Any
-import RPi.GPIO as GPIO
+
 
 from time import strftime
 from time import sleep
+
+# GPIO Setups
+print("Running on {}".format(platform.system()))
+if platform.system() != "Windows":
+    import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+    GPIO.setup(pin_reset_something, GPIO.OUT)
+    GPIO.output(pin_reset_something, 1)
+
+    GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=inside_minus)
+    GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=inside_plus)
+
 
 # Konfigs
 
@@ -36,16 +53,7 @@ root = Tk()  # TK root
 if not small_window:
     root.attributes('-fullscreen', True)
 
-# GPIO Setups
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-GPIO.setup(pin_reset, GPIO.OUT)
-GPIO.output(pin_reset, 1)
-
-GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=inside_minus)
-GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=inside_plus)
 
 
 # Anfang Funktionen Definition
@@ -102,6 +110,7 @@ def set_maximum(i):
 # OSC Handler
 def got_set_inside(address: str, *args: List[Any]) -> None:
     if len(args) > 0:
+        print(args)
         inside = args[0]
         set_inside(inside)
         root.after(1, send_counter_info, address[0])
@@ -109,9 +118,30 @@ def got_set_inside(address: str, *args: List[Any]) -> None:
 
 def got_set_maximum(address: str, *args: List[Any]) -> None:
     if len(args) > 0:
-        maximum = args[0]
+        print(args)
+        maximum = args[1]
         set_maximum(maximum)
         root.after(1, send_counter_info, address[0])
+
+
+def got_maximum_plus(address: str, *args: List[Any]) -> None:
+    maximum_plus()
+    root.after(1, send_counter_info, address[0])
+
+
+def got_maximum_minus(address: str, *args: List[Any]) -> None:
+    maximum_minus()
+    root.after(1, send_counter_info, address[0])
+
+
+def got_inside_plus(address: str, *args: List[Any]) -> None:
+    inside_plus()
+    root.after(1, send_counter_info, address[0])
+
+
+def got_inside_minus(address: str, *args: List[Any]) -> None:
+    inside_minus()
+    root.after(1, send_counter_info, address[0])
 
 
 # Sende Counter zurück an Sender
@@ -124,16 +154,28 @@ def send_counter_info(adress_send_to):
     msg.add_arg(people_inside)
     bundle.add_content(msg.build())
     bundle = bundle.build()
-    print("counter_info an {} gesendet".format(adress_send_to))
+    print("counter_info an {} gesendet mit max {} und inside {}".format(adress_send_to,max_people_allowed,people_inside))
+
     client.send(bundle)
 
 # Starte Server
 def start_osc_server():
+    print("*** STARTE OSC SERVER ***")
     dispat = dispatcher.Dispatcher()
     dispat.map("/counter/reset_inside", got_set_inside, needs_reply_address=True)
     dispat.map("/counter/reset_max", got_set_maximum, needs_reply_address=True)
+    dispat.map("/counter/inside_plus", got_inside_plus, needs_reply_address=True)
+    dispat.map("/counter/inside_minus", got_inside_minus, needs_reply_address=True)
+    dispat.map("/counter/max_pus", got_maximum_plus, needs_reply_address=True)
+    dispat.map("/counter/max_minus", got_maximum_minus, needs_reply_address=True)
 
     hostname = socket.gethostname()
     local_ip = socket.gethostbyname(hostname)
     server = osc_server.ThreadingOSCUDPServer((local_ip, 9001), dispat)
     server.serve_forever()
+
+
+run_osc_server = threading.Thread(target=start_osc_server)
+run_osc_server.start()
+
+root.mainloop()
