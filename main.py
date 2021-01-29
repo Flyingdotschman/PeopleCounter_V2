@@ -23,20 +23,6 @@ print("Running on {}".format(platform.system()))
 if platform.system() != "Windows":
     import RPi.GPIO as GPIO
 
-    pin_people_going = 14
-    pin_people_comming = 15
-    pin_reset_something = 12
-
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
-    GPIO.setup(pin_reset_something, GPIO.OUT)
-    GPIO.output(pin_reset_something, 1)
-
-    GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=inside_minus)
-    GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=inside_plus)
-
 
 # Konfigs
 
@@ -176,6 +162,21 @@ def start_osc_server():
     local_ip = socket.gethostbyname(hostname)
     server = osc_server.ThreadingOSCUDPServer((local_ip, 9001), dispat)
     server.serve_forever()
+
+if platform.system() != "Windows":
+    pin_people_going = 14
+    pin_people_comming = 15
+    pin_reset_something = 12
+
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+    GPIO.setup(pin_reset_something, GPIO.OUT)
+    GPIO.output(pin_reset_something, 1)
+
+    GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=inside_minus)
+    GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=inside_plus)
 
 
 run_osc_server = threading.Thread(target=start_osc_server)
