@@ -133,6 +133,8 @@ def got_inside_minus(address: str, *args: List[Any]) -> None:
     root.after(1, send_counter_info, address[0])
 
 
+def got_counter_info(address: str, *args: List[Any]) -> None:
+    root.after(1, send_counter_info, address[0])
 # Sende Counter zurück an Sender
 def send_counter_info(adress_send_to):
     global max_people_allowed, people_inside
@@ -157,6 +159,7 @@ def start_osc_server():
     dispat.map("/counter/inside_minus", got_inside_minus, needs_reply_address=True)
     dispat.map("/counter/max_pus", got_maximum_plus, needs_reply_address=True)
     dispat.map("/counter/max_minus", got_maximum_minus, needs_reply_address=True)
+    dispat.map("/counter/counter_info", got_counter_info, needs_reply_address=True)
     try:
         hostname = socket.gethostname()
         local_ip = socket.gethostbyname(hostname)
