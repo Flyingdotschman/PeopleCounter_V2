@@ -157,7 +157,7 @@ def start_osc_server():
     dispat.map("/counter/reset_max", got_set_maximum, needs_reply_address=True)
     dispat.map("/counter/inside_plus", got_inside_plus, needs_reply_address=True)
     dispat.map("/counter/inside_minus", got_inside_minus, needs_reply_address=True)
-    dispat.map("/counter/max_pus", got_maximum_plus, needs_reply_address=True)
+    dispat.map("/counter/max_plus", got_maximum_plus, needs_reply_address=True)
     dispat.map("/counter/max_minus", got_maximum_minus, needs_reply_address=True)
     dispat.map("/counter/counter_info", got_counter_info, needs_reply_address=True)
     try:
