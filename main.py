@@ -100,7 +100,7 @@ def set_maximum(i):
 def got_set_inside(address: str, *args: List[Any]) -> None:
     if len(args) > 0:
         print(args)
-        inside = args[0]
+        inside = args[1]
         set_inside(inside)
         root.after(1, send_counter_info, address[0])
 
