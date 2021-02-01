@@ -296,7 +296,7 @@ def start_video_player():
         video_player.play()
         #player.set_video_pos(1312,0,1920,1080)
         print("playing Video Nr.{}".format(index_video))
-        sleep(2)
+        #sleep(2)
         video_player.play_sync()
 
         root.after(1,start_video_player)
