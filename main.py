@@ -182,6 +182,10 @@ def update_the_screen():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         my_text1 = 'Personen'
         mainCanvas.create_text(500,900,anchor=NW,text=my_text1,fill='white',font='ITCAvantGardeStd-Demi 60 bold',state = 'normal')
+        my_text3 = str(max_people_allowed)
+        mainCanvas.create_text(310,900,anchor=NW,text=my_text3,fill='white',font='ITCAvantGardeStd-Demi 60 bold',state = 'normal')
+        my_text3 = str(people_inside) + "/"
+        mainCanvas.create_text(310, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 60 bold',state='normal')
     else:
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 
