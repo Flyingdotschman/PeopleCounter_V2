@@ -49,9 +49,10 @@ if not small_window:
 
 
 # Bilder werden geladen im Hintergrund
-
-background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/nasa.png")
-
+if platform.system() != "Windows":
+    background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/nasa.png")
+else:
+    background_go = PhotoImage(file="nasa.png")
 
 # Anfang Funktionen Definition
 def keydown(e):
@@ -178,6 +179,7 @@ def start_osc_server():
     global server
     print("*** STARTE OSC SERVER ***")
     dispat = dispatcher.Dispatcher()
+    socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
     dispat.map("/counter/reset_inside", got_set_inside, needs_reply_address=True)
     dispat.map("/counter/reset_max", got_set_maximum, needs_reply_address=True)
     dispat.map("/counter/inside_plus", got_inside_plus, needs_reply_address=True)
