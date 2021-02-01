@@ -59,6 +59,8 @@ if platform.system() != "Windows":
 else:
     background_go = PhotoImage(file="GO.png")
     background_stop = PhotoImage(file="Stop.png")
+
+
 # Anfang Funktionen Definition
 def load_last_file():  # Laed den letzten Stand der Perseonen
     try:
@@ -196,7 +198,8 @@ def update_the_screen():
         mainCanvas.create_text(310, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 60 bold',state='normal')
 
     else:
-        #if omx_proc is not None:
+        if omx_proc is not None:
+            omx_proc.stdin.write('q')
         keyboard.press("q")
         keyboard.release("q")
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
