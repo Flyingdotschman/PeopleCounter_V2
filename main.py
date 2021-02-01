@@ -283,7 +283,7 @@ def check_usb_stick_exists():
 def start_video_player():
     global file_list, video_player, index_video
 
-    if os.path.exists(file_list[index_video])
+    if os.path.exists(file_list[index_video]):
         filey = file_list[index_video]
         index_video = index_video + 1
         if index_video > len(file_list) -1:
