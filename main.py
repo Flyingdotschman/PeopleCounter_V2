@@ -261,7 +261,7 @@ def addtolist(file, extensions=['.mp4']):
 def video_player():
     global file_list, omx_proc
     file_list = []
-    omx_command = ['omxplayer', '--win', '1080,0,2160,0', '--no-osd', '--orientation', '270']
+    omx_command = ['omxplayer', '--win', '0,1312,1080,1920', '--no-osd', '--orientation', '270']
     t = threading.currentThread()
     while getattr(t, "running", True):
         walktree("/media/pi", addtolist)
