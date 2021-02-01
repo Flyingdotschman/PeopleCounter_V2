@@ -50,9 +50,9 @@ if not small_window:
 
 # Bilder werden geladen im Hintergrund
 if platform.system() != "Windows":
-    background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/nasa.png")
+    background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/GO.png")
 else:
-    background_go = PhotoImage(file="nasa.png")
+    background_go = PhotoImage(file="GO.png")
 
 # Anfang Funktionen Definition
 def load_last_file():  # Laed den letzten Stand der Perseonen
