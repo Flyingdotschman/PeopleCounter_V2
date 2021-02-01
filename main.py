@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import font as font
-
 import socket
+#from socket import *
 from pythonosc import udp_client
 from pythonosc import osc_bundle_builder, osc_message_builder
 from pythonosc import dispatcher, osc_server
@@ -55,13 +55,6 @@ else:
     background_go = PhotoImage(file="nasa.png")
 
 # Anfang Funktionen Definition
-def keydown(e):
-    if e == 't':
-        server.quit()
-        root.quit()
-    print('down', e.char)
-
-
 def load_last_file():  # Laed den letzten Stand der Perseonen
     try:
         with open("/home/pi/peopleCounter/reset.save.pkl") as f:
@@ -179,7 +172,7 @@ def start_osc_server():
     global server
     print("*** STARTE OSC SERVER ***")
     dispat = dispatcher.Dispatcher()
-    socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
+
     dispat.map("/counter/reset_inside", got_set_inside, needs_reply_address=True)
     dispat.map("/counter/reset_max", got_set_maximum, needs_reply_address=True)
     dispat.map("/counter/inside_plus", got_inside_plus, needs_reply_address=True)
@@ -192,8 +185,9 @@ def start_osc_server():
         local_ip = socket.gethostbyname(hostname)
     except:
         local_ip = "192.168.4.1"
+    print(local_ip)
     server = osc_server.ThreadingOSCUDPServer((local_ip, 9001), dispat)
-    server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
+
     server.serve_forever()
 
 
@@ -257,18 +251,15 @@ if platform.system() != "Windows":
     GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=inside_minus)
     GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=inside_plus)
 
-# Starte OSC Server
-run_osc_server = threading.Thread(target=start_osc_server)
-run_osc_server.start()
-
 
 # Lade Save File und letzte bekannte Besucher
 max_people_allowed, people_inside = load_last_file()
 
 # Erstellen der GUI
 mainCanvas = Canvas(root)
+
 mainCanvas.pack()
-mainCanvas.bind("<KeyPress>", keydown)
+
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0,0, image=background_go)
 root.mainloop()
