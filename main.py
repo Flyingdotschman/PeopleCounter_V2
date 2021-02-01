@@ -78,14 +78,16 @@ def save_last_file(maximum, inside):  # Speicher Anzahl in reset/save.pkl
 
 def inside_plus():
     global people_inside
-    people_inside = people_inside + 1
+    if people_inside < 1000:
+        people_inside = people_inside + 1
     save_last_file(max_people_allowed, people_inside)
     root.after(1, update_the_screen)
 
 
 def inside_minus():
     global people_inside
-    people_inside = people_inside - 1
+    if people_inside > 0:
+        people_inside = people_inside - 1
     save_last_file(max_people_allowed, people_inside)
     root.after(1, update_the_screen)
 
@@ -99,14 +101,16 @@ def set_inside(i):
 
 def maximum_plus():
     global max_people_allowed
-    max_people_allowed = max_people_allowed + 1
+    if max_people_allowed < 1000:
+        max_people_allowed = max_people_allowed + 1
     save_last_file(max_people_allowed, people_inside)
     root.after(1, update_the_screen)
 
 
 def maximum_minus():
     global max_people_allowed
-    max_people_allowed = max_people_allowed - 1
+    if max_people_allowed > 0:
+        max_people_allowed = max_people_allowed - 1
     save_last_file(max_people_allowed, people_inside)
     root.after(1, update_the_screen)
 
