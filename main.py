@@ -302,9 +302,10 @@ def start_video_player():
         if first_time_video_played:
             sleep(2)
             first_time_video_played = False
-        video_player.play_sync()
+        #video_player.play_sync()
         if not max_people_reached():
-            root.after(1,start_video_player)
+            duration_of_video = video_player.duration() * 1000
+            root.after(duration_of_video,start_video_player)
     else:
         root.after(1000, check_usb_stick_exists)
 
