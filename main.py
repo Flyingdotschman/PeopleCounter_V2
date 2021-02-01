@@ -272,7 +272,7 @@ def video_player():
             if getattr(t, "running", True):
                 full_command = omx_command + [file_list[x]]
                 stdout = subprocess.PIPE
-                omx_proc = subprocess.Popen(full_command, stdin=subprocess.PIPE)
+                omx_proc = subprocess.run(full_command, stdin=subprocess.PIPE)
 
 
 def starte_server_thread():
