@@ -41,7 +41,7 @@ max_people_allowed = 0  # Maximale Anzahl drinnen befiindlicher Personen
 people_inside = 0  # Momentane Anzahl der drinnen befindlichen Personen
 
 file_list = []
-
+server = []
 root = Tk()  # TK root
 
 if not small_window:
@@ -54,6 +54,13 @@ background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/nasa.png")
 
 
 # Anfang Funktionen Definition
+def keydown(e):
+    if e == "t":
+        server.quit()
+        root.quit()
+    print('down', e.char)
+
+
 def load_last_file():  # Laed den letzten Stand der Perseonen
     try:
         with open("/home/pi/peopleCounter/reset.save.pkl") as f:
@@ -168,6 +175,7 @@ def send_counter_info(adress_send_to):
 
 # Starte Server
 def start_osc_server():
+    global server
     print("*** STARTE OSC SERVER ***")
     dispat = dispatcher.Dispatcher()
     dispat.map("/counter/reset_inside", got_set_inside, needs_reply_address=True)
@@ -257,6 +265,7 @@ max_people_allowed, people_inside = load_last_file()
 # Erstellen der GUI
 mainCanvas = Canvas(root)
 mainCanvas.pack()
+mainCanvas.bind("<KeyPress>", keydown)
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0,0, image=background_go)
 root.mainloop()
