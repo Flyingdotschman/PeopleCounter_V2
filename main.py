@@ -44,6 +44,8 @@ file_list = []
 server = []
 
 omx_proc = []
+
+keyboard = Controller()
 root = Tk()  # TK root
 
 if not small_window:
@@ -194,8 +196,9 @@ def update_the_screen():
         mainCanvas.create_text(310, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 60 bold',state='normal')
 
     else:
-        if omx_proc is not None:
-            omx_proc.kill()
+        #if omx_proc is not None:
+        keyboard.press("q")
+        keyboard.release("q")
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 
 
@@ -258,7 +261,7 @@ def addtolist(file, extensions=['.mp4']):
 def video_player():
     global file_list, omx_proc
     file_list = []
-    omx_command = ['omxplayer', '--win', '1080,0,2160,730', '--no-osd']
+    omx_command = ['omxplayer', '--win', '1080,0,2160,730', '--no-osd', '--orientation', '270']
     t = threading.currentThread()
     while getattr(t, "running", True):
         walktree("/media/pi", addtolist)
@@ -273,7 +276,7 @@ def starte_server_thread():
     run_osc_server = threading.Thread(target=start_osc_server)
     run_osc_server.start()
 
-def starte_video_player_threasd():
+def starte_video_player_thread():
     video_player_thread = threading.Thread(target=video_player)
     video_player_thread.start()
 
@@ -306,5 +309,5 @@ mainCanvas.pack(fill="both", expand=True)
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 root.after(1, update_the_screen)
-root.after(1, starte_video_player_threasd)
+root.after(1, starte_video_player_thread)
 root.mainloop()
