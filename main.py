@@ -50,7 +50,8 @@ if not small_window:
 
 # Bilder werden geladen im Hintergrund
 
-background_go = PhotoImage(file="nasa.png")
+background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/nasa.png")
+
 
 # Anfang Funktionen Definition
 def load_last_file():  # Laed den letzten Stand der Perseonen
@@ -67,40 +68,46 @@ def load_last_file():  # Laed den letzten Stand der Perseonen
     return maximum, inside
 
 
-def save_last_file():  # Speicher Anzahl in reset/save.pkl
-    global max_people_allowed, people_inside
+def save_last_file(maximum, inside):  # Speicher Anzahl in reset/save.pkl
+
     with open("/home/pi/peopleCounter/reset.save.pkl", "w+") as f:
-        pickle.dump([max_people_allowed, people_inside], f)
+        pickle.dump([maximum, inside], f)
 
 
 def inside_plus():
     global people_inside
     people_inside = people_inside + 1
+    save_last_file(max_people_allowed, people_inside)
 
 
 def inside_minus():
     global people_inside
     people_inside = people_inside - 1
+    save_last_file(max_people_allowed, people_inside)
 
 
 def set_inside(i):
     global people_inside
     people_inside = i
+    save_last_file(max_people_allowed, people_inside)
 
 
 def maximum_plus():
     global max_people_allowed
     max_people_allowed = max_people_allowed + 1
+    save_last_file(max_people_allowed, people_inside)
 
 
 def maximum_minus():
     global max_people_allowed
     max_people_allowed = max_people_allowed - 1
+    save_last_file(max_people_allowed, people_inside)
 
 
 def set_maximum(i):
     global max_people_allowed
     max_people_allowed = i
+    save_last_file(max_people_allowed, people_inside)
 
 
 # OSC Handler
@@ -243,8 +250,11 @@ if platform.system() != "Windows":
 run_osc_server = threading.Thread(target=start_osc_server)
 run_osc_server.start()
 
-# Erstellen der GUI
 
+# Lade Save File und letzte bekannte Besucher
+max_people_allowed, people_inside = load_last_file()
+
+# Erstellen der GUI
 mainCanvas = Canvas(root)
 mainCanvas.pack()
 root.after(2, starte_server_thread)
