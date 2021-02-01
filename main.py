@@ -58,7 +58,7 @@ else:
 # Anfang Funktionen Definition
 def load_last_file():  # Laed den letzten Stand der Perseonen
     try:
-        with open("/home/pi/PeopleCounter_V2/reset/save.pkl") as f:
+        with open("/home/pi/PeopleCounter_V2/reset/save.pkl", "rb") as f:
             maximum, inside = pickle.load(f)
             if maximum is None:
                 maximum = 20
@@ -72,7 +72,7 @@ def load_last_file():  # Laed den letzten Stand der Perseonen
 
 def save_last_file(maximum, inside):  # Speicher Anzahl in reset/save.pkl
 
-    with open("/home/pi/PeopleCounter_V2/reset/save.pkl", "w+") as f:
+    with open("/home/pi/PeopleCounter_V2/reset/save.pkl", "wb+") as f:
         pickle.dump([maximum, inside], f)
 
 
