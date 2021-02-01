@@ -180,6 +180,8 @@ def update_the_screen():
     global mainCanvas
     if people_inside < max_people_allowed:
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
+        my_text1 = 'Personen'
+        mainCanvas.create_text(500,900,anchor=NW,text=my_text1,fill='white',font='ITCAvantGardeStd-Demi 60 bold',state = 'normal')
     else:
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 
