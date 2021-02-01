@@ -168,6 +168,16 @@ def send_counter_info(adress_send_to):
     client.send(bundle)
 
 
+# Update Screen Display
+def update_the_screen():
+    global max_people_allowed, people_inside
+    global mainCanvas
+    if people_inside < max_people_allowed:
+        mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
+    else:
+        mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
+
+
 # Starte Server
 def start_osc_server():
     global server
