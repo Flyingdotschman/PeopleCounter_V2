@@ -192,6 +192,7 @@ def update_the_screen():
         mainCanvas.create_text(310,900,anchor=NW,text=my_text3,fill='white',font='ITCAvantGardeStd-Demi 60 bold',state = 'normal')
         my_text3 = str(people_inside) + "/"
         mainCanvas.create_text(310, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 60 bold',state='normal')
+
     else:
         if omx_proc is not None:
             omx_proc.kill()
@@ -300,4 +301,5 @@ mainCanvas.pack(fill="both", expand=True)
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 root.after(1, update_the_screen)
+root.after(1, video_player)
 root.mainloop()
