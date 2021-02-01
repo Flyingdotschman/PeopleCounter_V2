@@ -42,6 +42,8 @@ people_inside = 0  # Momentane Anzahl der drinnen befindlichen Personen
 
 file_list = []
 server = []
+
+omx_proc = []
 root = Tk()  # TK root
 
 if not small_window:
@@ -181,7 +183,7 @@ def send_counter_info(adress_send_to):
 # Update Screen Display
 def update_the_screen():
     global max_people_allowed, people_inside
-    global mainCanvas
+    global mainCanvas, omx_proc
     if people_inside < max_people_allowed:
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         my_text1 = 'Personen'
@@ -191,6 +193,8 @@ def update_the_screen():
         my_text3 = str(people_inside) + "/"
         mainCanvas.create_text(310, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 60 bold',state='normal')
     else:
+        if omx_proc is not None:
+            omx_proc.kill()
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 
 
@@ -251,11 +255,17 @@ def addtolist(file, extensions=['.mp4']):
 
 
 def video_player():
-    global file_list
+    global file_list, omx_proc
     file_list = []
+    omx_command = ['omxplayer', '--win', '1080,0,2160,730', '--no-osd']
+    while getattr(t, "running", True):
+        walktree("/media/pi", addtolist)
+        for x in range(len(file_list)):
+            if getattr(t, "running", True):
+                full_command = omx_command + [file_list[x]]
+                stdout = subprocess.PIPE
+                omx_proc = subprocess.Popen(full_command)
 
-    omx_command = ['omxplayer']
-    walktree("/media/pi", addtolist)
 
 def starte_server_thread():
     run_osc_server = threading.Thread(target=start_osc_server)
