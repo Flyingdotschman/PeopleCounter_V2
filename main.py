@@ -259,6 +259,7 @@ def video_player():
     global file_list, omx_proc
     file_list = []
     omx_command = ['omxplayer', '--win', '1080,0,2160,730', '--no-osd']
+    t = threading.currentThread()
     while getattr(t, "running", True):
         walktree("/media/pi", addtolist)
         for x in range(len(file_list)):
@@ -271,6 +272,10 @@ def video_player():
 def starte_server_thread():
     run_osc_server = threading.Thread(target=start_osc_server)
     run_osc_server.start()
+
+def starte_video_player_threasd():
+    video_player_thread = threading.Thread(target=video_player)
+    video_player_thread.start()
 
 
 # GPIO Setup Part2
