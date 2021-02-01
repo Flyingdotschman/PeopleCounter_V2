@@ -13,6 +13,7 @@ import threading
 import platform
 
 import pickle
+from time import sleep as sleep
 
 from typing import List, Any
 
@@ -295,7 +296,8 @@ def start_video_player():
         #player.set_video_pos(1312,0,1920,1080)
         print("playing Video Nr.{}".format(index_video))
         video_player.play_sync()
-        root.after(3000,start_video_player)
+        sleep(1)
+        root.after(2000,start_video_player)
     else:
         root.after(1000, check_usb_stick_exists)
 
