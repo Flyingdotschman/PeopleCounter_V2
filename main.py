@@ -293,7 +293,7 @@ def start_video_player():
             index_video = 0
         player = OMXPlayer(filey, args=['--orientation','270'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
         player.set_video_pos(1312, 0, 1920, 1080)
-        player.set
+
         player.exitEvent(start_video_player)
     else:
         root.after(1000, check_usb_stick_exists)
