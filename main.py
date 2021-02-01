@@ -6,6 +6,8 @@ from pythonosc import udp_client
 from pythonosc import osc_bundle_builder, osc_message_builder
 from pythonosc import dispatcher, osc_server
 
+from omxplayer.player import OMXPlayer
+
 import threading
 
 import platform
@@ -34,16 +36,16 @@ if platform.system() != "Windows":
 small_window = False
 
 
-
 # First Variables definition
 
 max_people_allowed = 0  # Maximale Anzahl drinnen befiindlicher Personen
 people_inside = 0  # Momentane Anzahl der drinnen befindlichen Personen
 
+index_video = 0
 file_list = []
 server = []
 
-omx_proc = []
+video_player = []
 
 keyboard = Controller()
 root = Tk()  # TK root
@@ -128,6 +130,13 @@ def set_maximum(i):
     root.after(1, update_the_screen)
 
 
+def max_people_reached():
+    global max_people_allowed, people_inside
+    if max_people_allowed > people_inside:
+        return False
+    return True
+
+
 # OSC Handler
 def got_set_inside(address: str, *args: List[Any]) -> None:
     if len(args) > 0:
@@ -188,7 +197,7 @@ def send_counter_info(adress_send_to):
 def update_the_screen():
     global max_people_allowed, people_inside
     global mainCanvas, omx_proc
-    if people_inside < max_people_allowed:
+    if not max_people_reached():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         my_text1 = 'Personen'
         mainCanvas.create_text(500,900,anchor=NW,text=my_text1,fill='white',font='ITCAvantGardeStd-Demi 60 bold',state = 'normal')
@@ -261,19 +270,29 @@ def addtolist(file, extensions=['.mp4']):
         file_list.append(file)
 
 
-def video_player():
-    global file_list, omx_proc
-    file_list = []
-    omx_command = ['omxplayer', '--win', '1312,0,1920,1080', '--no-osd', '--orientation', '270']
-    t = threading.currentThread()
-    while getattr(t, "running", True):
+def check_usb_stick_exists():
+    global index_video
+    print("Checking for USB")
+    if len(os.listdir("/media/pi"))>0:
         walktree("/media/pi", addtolist)
-        for x in range(len(file_list)):
-            if getattr(t, "running", True):
-                full_command = omx_command + [file_list[x]]
-                stdout = subprocess.PIPE
-                omx_proc = subprocess.run(full_command, stdin=subprocess.PIPE)
+        index_video = 0
+        start_video_player()
+    else:
+        root.after(1000,check_usb_stick_exists)
 
+def start_video_player():
+    global file_list, video_player, index_video
+
+    if os.path.exists(file_list[index_video])
+        filey = file_list[index_video]
+        index_video = index_video + 1
+        if index_video > len(file_list) -1:
+            index_video = 0
+        player = OMXPlayer(filey, dbus_name = 'org.mpris.MeidlaPlayer2.omxplayer1')
+        player.set_video_pos(1312, 0, 1920, 1080)
+        player.exitEvent(start_video_player)
+    else:
+        root.after(1000,check_usb_stick_exists)
 
 def starte_server_thread():
     run_osc_server = threading.Thread(target=start_osc_server)
