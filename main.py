@@ -295,8 +295,9 @@ def start_video_player():
         video_player = OMXPlayer(filey, args=['--orientation','270','--win','1312,0,1920,1080','--no-osd'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
         #player.set_video_pos(1312,0,1920,1080)
         print("playing Video Nr.{}".format(index_video))
+        sleep(2)
         video_player.play_sync()
-        sleep(1)
+
         root.after(2000,start_video_player)
     else:
         root.after(1000, check_usb_stick_exists)
