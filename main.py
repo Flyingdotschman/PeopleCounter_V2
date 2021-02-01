@@ -55,7 +55,7 @@ background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/nasa.png")
 
 # Anfang Funktionen Definition
 def keydown(e):
-    if e == "t":
+    if e == 't':
         server.quit()
         root.quit()
     print('down', e.char)
@@ -191,6 +191,7 @@ def start_osc_server():
     except:
         local_ip = "192.168.4.1"
     server = osc_server.ThreadingOSCUDPServer((local_ip, 9001), dispat)
+    serve.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
     server.serve_forever()
 
 
