@@ -218,6 +218,10 @@ def video_player():
     omx_command = ['omxplayer']
     walktree("/media/pi", addtolist)
 
+def starte_server_thread():
+    run_osc_server = threading.Thread(target=start_osc_server)
+    run_osc_server.start()
+
 
 # GPIO Setup Part2
 if platform.system() != "Windows":
@@ -243,6 +247,6 @@ run_osc_server.start()
 
 mainCanvas = Canvas(root)
 mainCanvas.pack()
-
+root.after(2, starte_server_thread)
 mainCanvas.create_image(0,0, image=background_go)
 root.mainloop()
