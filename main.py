@@ -327,9 +327,9 @@ max_people_allowed, people_inside = load_last_file()
 mainCanvas = Canvas(root)
 
 mainCanvas.pack(fill="both", expand=True)
-
+root.after(1000,check_usb_stick_exists)
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 root.after(1, update_the_screen)
-root.after(1, starte_video_player_thread)
+#root.after(1, starte_video_player_thread)
 root.mainloop()
