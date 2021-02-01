@@ -50,7 +50,7 @@ root = Tk()  # TK root
 
 if not small_window:
     #root.attributes('-fullscreen', True)
-    root.geometry("1920x1080")
+    root.geometry("1080x1920")
 
 # Bilder werden geladen im Hintergrund
 if platform.system() != "Windows":
