@@ -291,7 +291,7 @@ def start_video_player():
         index_video = index_video + 1
         if index_video > len(file_list) - 1:
             index_video = 0
-        player = OMXPlayer(filey, args=['--orientation 270'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
+        player = OMXPlayer(filey, args=['--orientation','270'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
         player.set_video_pos(1312, 0, 1920, 1080)
         player.set
         player.exitEvent(start_video_player)
