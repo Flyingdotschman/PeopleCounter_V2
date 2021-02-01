@@ -300,12 +300,13 @@ def start_video_player():
         #player.set_video_pos(1312,0,1920,1080)
         print("playing Video Nr.{}".format(index_video))
         if first_time_video_played:
-            sleep(video_player.duration())
+            sleep(5)
+            video_player.play_sync()
             first_time_video_played = False
-            root.after(500, start_video_player)
-            video_player.quit()
-            return
-        #video_player.play_sync()
+            #root.after(500, start_video_player)
+            #video_player.quit()
+            #return
+        #
         if not max_people_reached():
             duration_of_video = int(video_player.duration() * 1000)
             root.after(duration_of_video,start_video_player)
