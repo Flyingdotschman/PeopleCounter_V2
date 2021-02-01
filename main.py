@@ -295,7 +295,7 @@ def start_video_player():
         #player.set_video_pos(1312,0,1920,1080)
         print("playing Video Nr.{}".format(index_video))
         video_player.play_sync()
-        #root.after(3000,start_video_player)
+        root.after(3000,start_video_player)
     else:
         root.after(1000, check_usb_stick_exists)
 
@@ -304,10 +304,6 @@ def starte_server_thread():
     run_osc_server = threading.Thread(target=start_osc_server)
     run_osc_server.start()
 
-
-def starte_video_player_thread():
-    video_player_thread = threading.Thread(target=video_player)
-    video_player_thread.start()
 
 
 # GPIO Setup Part2
