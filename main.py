@@ -299,7 +299,7 @@ def start_video_player():
         sleep(2)
         video_player.play_sync()
 
-        root.after(2000,start_video_player)
+        root.after(1,start_video_player)
     else:
         root.after(1000, check_usb_stick_exists)
 
@@ -333,7 +333,7 @@ max_people_allowed, people_inside = load_last_file()
 mainCanvas = Canvas(root)
 
 mainCanvas.pack(fill="both", expand=True)
-root.after(1000, check_usb_stick_exists)
+root.after(3000, check_usb_stick_exists)
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 root.after(1, update_the_screen)
