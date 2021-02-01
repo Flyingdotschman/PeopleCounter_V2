@@ -51,9 +51,10 @@ if not small_window:
 # Bilder werden geladen im Hintergrund
 if platform.system() != "Windows":
     background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/GO.png")
+    background_stop = PhotoImage(file="/home/pi/PeopleCounter_V2/STOP.png")
 else:
     background_go = PhotoImage(file="GO.png")
-
+    background_stop = PhotoImage(file="STOP.png")
 # Anfang Funktionen Definition
 def load_last_file():  # Laed den letzten Stand der Perseonen
     try:
@@ -261,5 +262,5 @@ mainCanvas = Canvas(root)
 mainCanvas.pack(fill="both", expand=True)
 
 root.after(2, starte_server_thread)
-mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
+mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 root.mainloop()
