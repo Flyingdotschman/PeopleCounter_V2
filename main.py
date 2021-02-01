@@ -14,11 +14,16 @@ import pickle
 
 from typing import List, Any
 
-
 from time import strftime
 from time import sleep
 
-# GPIO Setups
+import os
+import sys
+import stat
+import subprocess
+from pynput.keyboard import Key, Controller
+
+# GPIO Setups Part 1
 print("Running on {}".format(platform.system()))
 if platform.system() != "Windows":
     import RPi.GPIO as GPIO
@@ -26,7 +31,7 @@ if platform.system() != "Windows":
 
 # Konfigs
 
-small_window = True
+small_window = False
 
 
 
@@ -43,7 +48,9 @@ if not small_window:
     root.attributes('-fullscreen', True)
 
 
+# Bilder werden geladen im Hintergrund
 
+background_go = PhotoImage(file="nasa.png")
 
 # Anfang Funktionen Definition
 def load_last_file():  # Laed den letzten Stand der Perseonen
@@ -135,6 +142,8 @@ def got_inside_minus(address: str, *args: List[Any]) -> None:
 
 def got_counter_info(address: str, *args: List[Any]) -> None:
     root.after(1, send_counter_info, address[0])
+
+
 # Sende Counter zurück an Sender
 def send_counter_info(adress_send_to):
     global max_people_allowed, people_inside
@@ -148,6 +157,7 @@ def send_counter_info(adress_send_to):
     print("counter_info an {} gesendet mit max {} und inside {}".format(adress_send_to,max_people_allowed,people_inside))
 
     client.send(bundle)
+
 
 # Starte Server
 def start_osc_server():
@@ -168,6 +178,48 @@ def start_osc_server():
     server = osc_server.ThreadingOSCUDPServer((local_ip, 9001), dispat)
     server.serve_forever()
 
+
+# Methoden zum Suchen und finden der Videos
+def walktree(top, callback):
+    """recursively descend the directory tree rooted at top, calling the
+    callback function for each regular file. Taken from the module-stat
+    example at: http://docs.python.org/lib/module-stat.html
+    """
+    for f in os.listdir(top):
+        pathname = os.path.join(top, f)
+        mode = os.stat(pathname)[stat.ST_MODE]
+        if stat.S_ISDIR(mode):
+            # It's a directory, recurse into it
+            walktree(pathname, callback)
+        elif stat.S_ISREG(mode):
+            # It's a file, call the callback function
+            callback(pathname)
+        else:
+            pass
+            # Unknown file type, print a message
+            # print('Skipping %s' % pathname)
+
+
+def addtolist(file, extensions=['.mp4']):
+    """Add a file to a global list of image files."""
+    global file_list  # ugh
+    filename, ext = os.path.splitext(file)
+    e = ext.lower()
+    # Only add common image types to the list.
+    if e in extensions:
+        print('Adding to list: ', file)
+        file_list.append(file)
+
+
+def video_player():
+    global file_list
+    file_list = []
+
+    omx_command = ['omxplayer']
+    walktree("/media/pi", addtolist)
+
+
+# GPIO Setup Part2
 if platform.system() != "Windows":
     pin_people_going = 14
     pin_people_comming = 15
@@ -183,8 +235,14 @@ if platform.system() != "Windows":
     GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=inside_minus)
     GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=inside_plus)
 
-
+# Starte OSC Server
 run_osc_server = threading.Thread(target=start_osc_server)
 run_osc_server.start()
 
+# Erstellen der GUI
+
+mainCanvas = Canvas(root)
+mainCanvas.pack()
+
+mainCanvas.create_image(0,0, image=background_go)
 root.mainloop()
