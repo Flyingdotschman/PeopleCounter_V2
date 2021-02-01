@@ -43,6 +43,7 @@ people_inside = 0  # Momentane Anzahl der drinnen befindlichen Personen
 index_video = 0
 file_list = []
 server = []
+first_time_video_played = True
 
 video_player = []
 
@@ -196,7 +197,7 @@ def send_counter_info(adress_send_to):
 # Update Screen Display
 def update_the_screen():
     global max_people_allowed, people_inside
-    global mainCanvas, omx_proc
+    global mainCanvas, video_player
     if not max_people_reached():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         my_text1 = 'Personen'
@@ -210,8 +211,8 @@ def update_the_screen():
                                state='normal')
 
     else:
-        if omx_proc is not None:
-            omx_proc.stdin.write('q')
+        if video_player is not None:
+            video_player.quit()
         keyboard.press("q")
         keyboard.release("q")
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
@@ -274,18 +275,20 @@ def addtolist(file, extensions=['.mp4']):
 
 
 def check_usb_stick_exists():
-    global index_video
+    global index_video, first_time_video_played
     print("Checking for USB")
     if len(os.listdir("/media/pi")) > 0:
         walktree("/media/pi", addtolist)
         index_video = 0
+        first_time_video_played = True
         start_video_player()
+
     else:
         root.after(1000, check_usb_stick_exists)
 
 
 def start_video_player():
-    global file_list, video_player, index_video
+    global file_list, video_player, index_video, first_time_video_played
 
     if os.path.exists(file_list[index_video]):
         filey = file_list[index_video]
@@ -296,10 +299,12 @@ def start_video_player():
         video_player.play()
         #player.set_video_pos(1312,0,1920,1080)
         print("playing Video Nr.{}".format(index_video))
-        #sleep(2)
+        if first_time_video_played:
+            sleep(2)
+            first_time_video_played = False
         video_player.play_sync()
-
-        root.after(1,start_video_player)
+        if not max_people_reached:
+            root.after(1,start_video_player)
     else:
         root.after(1000, check_usb_stick_exists)
 
