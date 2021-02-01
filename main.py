@@ -80,36 +80,42 @@ def inside_plus():
     global people_inside
     people_inside = people_inside + 1
     save_last_file(max_people_allowed, people_inside)
+    root.after(1, update_the_screen)
 
 
 def inside_minus():
     global people_inside
     people_inside = people_inside - 1
     save_last_file(max_people_allowed, people_inside)
+    root.after(1, update_the_screen)
 
 
 def set_inside(i):
     global people_inside
     people_inside = i
     save_last_file(max_people_allowed, people_inside)
+    root.after(1, update_the_screen)
 
 
 def maximum_plus():
     global max_people_allowed
     max_people_allowed = max_people_allowed + 1
     save_last_file(max_people_allowed, people_inside)
+    root.after(1, update_the_screen)
 
 
 def maximum_minus():
     global max_people_allowed
     max_people_allowed = max_people_allowed - 1
     save_last_file(max_people_allowed, people_inside)
+    root.after(1, update_the_screen)
 
 
 def set_maximum(i):
     global max_people_allowed
     max_people_allowed = i
     save_last_file(max_people_allowed, people_inside)
+    root.after(1, update_the_screen)
 
 
 # OSC Handler
@@ -273,4 +279,5 @@ mainCanvas.pack(fill="both", expand=True)
 
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
+root.after(1, update_the_screen)
 root.mainloop()
