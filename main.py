@@ -302,7 +302,9 @@ def start_video_player():
         if first_time_video_played:
             sleep(video_player.duration())
             first_time_video_played = False
+            root.after(500, start_video_player)
             video_player.quit()
+            return
         #video_player.play_sync()
         if not max_people_reached():
             duration_of_video = int(video_player.duration() * 1000)
