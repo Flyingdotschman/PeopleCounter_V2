@@ -46,7 +46,7 @@ root = Tk()  # TK root
 
 if not small_window:
     root.attributes('-fullscreen', True)
-
+    #root.geometry("1920x1080")
 
 # Bilder werden geladen im Hintergrund
 if platform.system() != "Windows":
@@ -258,8 +258,8 @@ max_people_allowed, people_inside = load_last_file()
 # Erstellen der GUI
 mainCanvas = Canvas(root)
 
-mainCanvas.pack()
+mainCanvas.pack(fill="both", expand=True)
 
 root.after(2, starte_server_thread)
-mainCanvas.create_image(0,0, image=background_go)
+mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
 root.mainloop()
