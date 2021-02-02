@@ -281,7 +281,8 @@ def check_usb_stick_exists():
         walktree("/media/pi", addtolist)
         index_video = 0
         first_time_video_played = True
-        start_video_player()
+        tt=thrading.Thread(target=start_video_player)
+        tt.start()
 
     else:
         root.after(1000, check_usb_stick_exists)
@@ -323,9 +324,9 @@ def start_video_player():
             #return
         #
         if not max_people_reached():
-
-            root.after(duration_of_video,start_video_player)
-            root.after(duration_of_video, start_video_player)
+            threading.Timer(duration_of_video,start_video_player).start()
+            #root.after(duration_of_video,start_video_player)
+            #root.after(duration_of_video, start_video_player)
     else:
         root.after(1000, check_usb_stick_exists)
 
