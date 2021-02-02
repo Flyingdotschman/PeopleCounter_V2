@@ -296,13 +296,15 @@ def start_video_player():
         if index_video > len(file_list) - 1:
             index_video = 0
         video_player = OMXPlayer(filey, args=['--orientation','270','--win','1312,0,1920,1080','--no-osd'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
-        video_player.play()
+        print(video_player.is_playing())
+        print(video_player.duration())
+        #video_player.play()
         duration_of_video = int(video_player.duration() * 1000)
         #player.set_video_pos(1312,0,1920,1080)
         print("playing Video Nr.{}".format(index_video))
         if first_time_video_played:
-            sleep(5)
-            video_player.play_sync()
+          #  sleep(5)
+           # video_player.play_sync()
             first_time_video_played = False
             #root.after(500, start_video_player)
             #video_player.quit()
