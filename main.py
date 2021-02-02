@@ -281,7 +281,7 @@ def check_usb_stick_exists():
         walktree("/media/pi", addtolist)
         index_video = 0
         first_time_video_played = True
-        tt=thrading.Thread(target=start_video_player)
+        tt=threading.Thread(target=start_video_player)
         tt.start()
 
     else:
