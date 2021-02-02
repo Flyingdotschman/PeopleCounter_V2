@@ -295,7 +295,14 @@ def start_video_player():
         index_video = index_video + 1
         if index_video > len(file_list) - 1:
             index_video = 0
-        if not video_player.is_playing() or video_player is []:
+
+        if video_player is []:
+            video_player_playing = False
+        else:
+            video_player_playing is video_player.is_playing()
+
+
+        if not video_player_playing:
             video_player = OMXPlayer(filey, args=['--orientation','270','--win','1312,0,1920,1080','--no-osd'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
         print(video_player.is_playing())
        # print(video_player.duration())
