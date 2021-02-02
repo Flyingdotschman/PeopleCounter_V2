@@ -305,7 +305,8 @@ def start_video_player():
         if not video_player_playing:
             video_player = OMXPlayer(filey, args=['--orientation','270','--win','1312,0,1920,1080','--no-osd'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
             video_player.mute()
-            duration_of_video = int(video_player.duration() * 1000)
+            #duration_of_video = int(video_player.duration() * 1000)
+            duration_of_video = video_player.duration()
             if not max_people_reached():
                 threading.Timer(duration_of_video, start_video_player).start()
 
