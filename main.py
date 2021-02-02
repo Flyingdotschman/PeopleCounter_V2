@@ -137,6 +137,16 @@ def max_people_reached():
     return True
 
 
+# PIN EVENT HANLDER
+def pin_inside_plus_resc(channel):
+    inside_plus()
+    #root.after(1, send_counter_info, address[0])
+
+
+def pin_inside_minus_resc(channel):
+    inside_minus()
+    #root.after(1, send_counter_info, address[0])
+
 # OSC Handler
 def got_set_inside(address: str, *args: List[Any]) -> None:
     if len(args) > 0:
@@ -335,19 +345,19 @@ def starte_server_thread():
 
 # GPIO Setup Part2
 if platform.system() != "Windows":
-    pin_people_going = 16
-    pin_people_comming = 20
+    pin_people_going = 36
+    pin_people_comming = 38
     pin_reset_something = 12
 
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BOARD)
     GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     GPIO.setup(pin_reset_something, GPIO.OUT)
     GPIO.output(pin_reset_something, 1)
 
-    GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=inside_minus)
-    GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=inside_plus)
+    GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=pin_inside_minus_resc)
+    GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=pin_inside_plus_resc)
 
 # Lade Save File und letzte bekannte Besucher
 max_people_allowed, people_inside = load_last_file()
