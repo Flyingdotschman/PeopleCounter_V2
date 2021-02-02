@@ -220,8 +220,7 @@ def update_the_screen():
         except:
             pass
 
-        keyboard.press("q")
-        keyboard.release("q")
+
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 
 
