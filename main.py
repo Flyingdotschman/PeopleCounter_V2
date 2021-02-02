@@ -310,14 +310,12 @@ def start_video_player():
         print(video_player_playing)
         if not video_player_playing:
             video_player = OMXPlayer(filey, args=['--orientation','270','--win','1312,0,1920,1080','--no-osd','--vol','-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
-           # video_player.mute()
-            #duration_of_video = int(video_player.duration() * 1000)
-            duration_of_video = video_player.duration()
-            print(duration_of_video)
+
         else:
             video_player.load(filey)
-            duration_of_video = video_player.duration()
-            print(duration_of_video)
+
+        duration_of_video = video_player.duration() + 3
+        print(duration_of_video)
         video_player.mute()
         if max_people_reached():
             video_player.hide_video()
