@@ -211,8 +211,11 @@ def update_the_screen():
                                state='normal')
 
     else:
-        if video_player is not None:
-            video_player.quit()
+        try:
+            video_player.stop()
+        except:
+            pass
+
         keyboard.press("q")
         keyboard.release("q")
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
