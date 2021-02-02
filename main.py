@@ -296,7 +296,7 @@ def start_video_player():
         if index_video > len(file_list) - 1:
             index_video = 0
 
-        if video_player is []:
+        if video_player is list:
             video_player_playing = False
         else:
             video_player_playing = video_player.is_playing()
