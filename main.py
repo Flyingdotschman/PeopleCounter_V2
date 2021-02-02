@@ -299,7 +299,7 @@ def start_video_player():
         if video_player is []:
             video_player_playing = False
         else:
-            video_player_playing is video_player.is_playing()
+            video_player_playing = video_player.is_playing()
 
 
         if not video_player_playing:
