@@ -348,11 +348,11 @@ def starte_server_thread():
 
 # GPIO Setup Part2
 if platform.system() != "Windows":
-    pin_people_going = 36
-    pin_people_comming = 38
+    pin_people_going = 16
+    pin_people_comming = 20
     pin_reset_something = 12
 
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
     GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
