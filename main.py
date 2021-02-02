@@ -25,6 +25,7 @@ import sys
 import stat
 import subprocess
 from pynput.keyboard import Key, Controller
+from pynput.mouse import Controller as Mouse
 
 # GPIO Setups Part 1
 print("Running on {}".format(platform.system()))
@@ -48,6 +49,8 @@ first_time_video_played = True
 video_player = []
 
 keyboard = Controller()
+mouse = Mouse()
+mouse.position(10000,10000)
 root = Tk()  # TK root
 
 if not small_window:
