@@ -295,11 +295,13 @@ def start_video_player():
         index_video = index_video + 1
         if index_video > len(file_list) - 1:
             index_video = 0
-        video_player = OMXPlayer(filey, args=['--orientation','270','--win','1312,0,1920,1080','--no-osd'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
+        if not video_playier.is_playing() or video_player is []:
+            video_player = OMXPlayer(filey, args=['--orientation','270','--win','1312,0,1920,1080','--no-osd'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
         print(video_player.is_playing())
        # print(video_player.duration())
         #video_player.play()
         duration_of_video = int(video_player.duration() * 1000)
+        print(duration_of_video)
         #player.set_video_pos(1312,0,1920,1080)
         print("playing Video Nr.{}".format(index_video))
         if first_time_video_played:
@@ -313,6 +315,7 @@ def start_video_player():
         if not max_people_reached():
 
             root.after(duration_of_video,start_video_player)
+            root.after(duration_of_video, start_video_player)
     else:
         root.after(1000, check_usb_stick_exists)
 
