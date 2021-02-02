@@ -309,7 +309,9 @@ def start_video_player():
             duration_of_video = video_player.duration()
             print(duration_of_video)
         else:
-            duration_of_video = 0.1
+            video_player.load(filey)
+            duration_of_video = video_player.duration()
+            print(duration_of_video)
         if not max_people_reached():
             threading.Timer(duration_of_video, start_video_player).start()
 
