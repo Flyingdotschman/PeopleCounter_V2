@@ -219,13 +219,13 @@ def update_the_screen():
     if not max_people_reached():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         my_text1 = 'Personen'
-        mainCanvas.create_text(990, 1000, anchor=NW, text=my_text1, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
+        mainCanvas.create_text(590, 1070, anchor=NW, text=my_text1, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
                                state='normal')
         my_text3 = str(max_people_allowed)
-        mainCanvas.create_text(990, 900, anchor=NW, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
+        mainCanvas.create_text(590, 900, anchor=NW, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
                                state='normal')
         my_text3 = str(people_inside) + "/"
-        mainCanvas.create_text(990, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
+        mainCanvas.create_text(590, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
                                state='normal')
         try:
             video_player.show_video()
