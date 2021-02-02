@@ -306,10 +306,10 @@ def start_video_player():
             duration_of_video = int(video_player.duration() * 1000)
         else:
             duration_of_video = 1
-        print(video_player.is_playing())
+        print(video_player_playing)
        # print(video_player.duration())
         #video_player.play()
-        duration_of_video = int(video_player.duration() * 1000)
+        #duration_of_video = int(video_player.duration() * 1000)
         print(duration_of_video)
         #player.set_video_pos(1312,0,1920,1080)
         print("playing Video Nr.{}".format(index_video))
