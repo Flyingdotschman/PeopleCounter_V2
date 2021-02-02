@@ -140,12 +140,14 @@ def max_people_reached():
 # PIN EVENT HANLDER
 def pin_inside_plus_resc(channel):
     inside_plus()
+    print(channel)
     print("Pin Inside Plus Empfangen")
     #root.after(1, send_counter_info, address[0])
 
 
 def pin_inside_minus_resc(channel):
     inside_minus()
+    print(channel)
     print("Pin Inside Minus Empfangen")
     #root.after(1, send_counter_info, address[0])
 
