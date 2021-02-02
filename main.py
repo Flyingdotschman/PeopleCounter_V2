@@ -212,20 +212,20 @@ def send_counter_info(adress_send_to):
     client.send(bundle)
 
 
-# Update Screen Display
+# Update Screen Display Zeichne die Zahlen und Stop Bildschirm
 def update_the_screen():
     global max_people_allowed, people_inside
     global mainCanvas, video_player
     if not max_people_reached():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         my_text1 = 'Personen'
-        mainCanvas.create_text(500, 900, anchor=NW, text=my_text1, fill='white', font='ITCAvantGardeStd-Demi 60 bold',
+        mainCanvas.create_text(500, 1000, anchor=NW, text=my_text1, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
                                state='normal')
         my_text3 = str(max_people_allowed)
-        mainCanvas.create_text(310, 900, anchor=NW, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 60 bold',
+        mainCanvas.create_text(310, 1000, anchor=NW, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
                                state='normal')
         my_text3 = str(people_inside) + "/"
-        mainCanvas.create_text(310, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 60 bold',
+        mainCanvas.create_text(310, 1000, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
                                state='normal')
         try:
             video_player.show_video()
