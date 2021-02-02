@@ -209,10 +209,14 @@ def update_the_screen():
         my_text3 = str(people_inside) + "/"
         mainCanvas.create_text(310, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 60 bold',
                                state='normal')
+        try:
+            video_player.show_video()
+        except:
+            pass
 
     else:
         try:
-            video_player.stop()
+            video_player.hide_video()
         except:
             pass
 
