@@ -50,7 +50,7 @@ video_player = []
 
 keyboard = Controller()
 mouse = Mouse()
-mouse.position(10000,10000)
+mouse.position = (10000,10000)
 root = Tk()  # TK root
 
 if not small_window:
