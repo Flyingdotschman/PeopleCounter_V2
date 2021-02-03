@@ -18,7 +18,10 @@ from time import sleep as sleep
 from typing import List, Any
 
 from time import strftime
-from time import sleep
+
+from PIL import Image
+from PIL import ImageTk
+
 
 import os
 import sys
@@ -61,6 +64,7 @@ if not small_window:
 if platform.system() != "Windows":
     background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/Go.png")
     background_stop = PhotoImage(file="/home/pi/PeopleCounter_V2/Stop.png")
+
     logo = PhotoImage(file="/home/pi/PeopleCounter_V2/Logo.png")
 else:
     background_go = PhotoImage(file="Go.png")
