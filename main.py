@@ -70,7 +70,7 @@ if platform.system() != "Windows":
     background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/Go.png")
     background_stop = PhotoImage(file="/home/pi/PeopleCounter_V2/Stop.png")
 
-    width = (1920-1312)*.9
+    width = int((1920-1312)*.9)
     height = width
     img = Image.open("/home/pi/PeopleCounter_V2/Logo.png")
     img = img.resize((width, height), Image.ANTIALIAS)
