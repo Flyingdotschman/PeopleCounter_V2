@@ -69,8 +69,8 @@ if platform.system() != "Windows":
     height = width
     img = Image.open("/home/pi/PeopleCounter_V2/Logo.png")
     img = img.resize((width, height), Image.ANTIALIAS)
-    img = ImageTk.PhotoImage(img)
-    logo = PhotoImage(img)
+    logo = ImageTk.PhotoImage(img)
+    #logo = PhotoImage(img)
 else:
     background_go = PhotoImage(file="Go.png")
     background_stop = PhotoImage(file="Stop.png")
@@ -227,7 +227,7 @@ def update_the_screen():
     global mainCanvas, video_player
     if not max_people_reached():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
-        mainCanvas.create_image(1312 + (1920 - 1312) / 2, 1080 / 2, image=logo, anchor=CENTER)
+        mainCanvas.create_image((1312 + (1920 - 1312) / 2), (1080 / 2), image=logo, anchor=CENTER)
         my_text1 = 'Personen'
         mainCanvas.create_text(590, 1070, anchor=CENTER, text=my_text1, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
                                state='normal')
