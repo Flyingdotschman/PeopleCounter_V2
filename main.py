@@ -35,6 +35,11 @@ print("Running on {}".format(platform.system()))
 if platform.system() != "Windows":
     import RPi.GPIO as GPIO
 
+    pin_people_going = 23
+    pin_people_comming = 26
+
+    GPIO.setmode(GPIO.BOARD)
+
 # Konfigs
 
 small_window = False
@@ -361,16 +366,9 @@ def starte_server_thread():
 
 # GPIO Setup Part2
 if platform.system() != "Windows":
-    pin_people_going = 16
-    pin_people_comming = 20
-    pin_reset_something = 12
 
-    GPIO.setmode(GPIO.BCM)
     GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
-    GPIO.setup(pin_reset_something, GPIO.OUT)
-    GPIO.output(pin_reset_something, 1)
 
     GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=pin_inside_minus_resc)
     GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=pin_inside_plus_resc)

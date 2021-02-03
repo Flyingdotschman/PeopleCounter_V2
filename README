@@ -1,0 +1,13 @@
+Benutzte Bibiliotheken die möglicherweise
+ noch installiert werden müssen.
+
+ sudo apt-get install -y libdbus-1{-3,-dev}
+
+ Folgende Python Bilbiotheken sollten Teil des Repositories sein, müssen ggf. noch installiert werden.
+ pip install python-osc
+ pip install pillow
+ pip install omxplayer-wrapper
+ pip install pynput
+
+
+
