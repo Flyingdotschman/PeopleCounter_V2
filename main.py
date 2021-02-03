@@ -69,6 +69,7 @@ if platform.system() != "Windows":
     height = width
     img = Image.open("/home/pi/PeopleCounter_V2/Logo.png")
     img = img.resize((width, height), Image.ANTIALIAS)
+    img = ImageTk.PhotoImage(img)
     logo = PhotoImage(img)
 else:
     background_go = PhotoImage(file="Go.png")
