@@ -59,11 +59,11 @@ if not small_window:
 
 # Bilder werden geladen im Hintergrund
 if platform.system() != "Windows":
-    background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/GO.png")
+    background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/Go.png")
     background_stop = PhotoImage(file="/home/pi/PeopleCounter_V2/Stop.png")
     logo = PhotoImage(file="/home/pi/PeopleCounter_V2/Logo.png")
 else:
-    background_go = PhotoImage(file="GO.png")
+    background_go = PhotoImage(file="Go.png")
     background_stop = PhotoImage(file="Stop.png")
 
 
