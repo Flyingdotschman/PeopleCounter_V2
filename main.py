@@ -226,7 +226,7 @@ def update_the_screen():
     global max_people_allowed, people_inside
     global mainCanvas, video_player
     if not max_people_reached():
-        mainCanvas.create_image(0, 0, image=bacground_go, anchor="nw")
+        mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         mainCanvas.create_image((1080 / 2),(1312 + (1920 - 1312) / 2), image=logo, anchor=CENTER)
         my_text1 = 'Personen'
         mainCanvas.create_text(590, 1070, anchor=CENTER, text=my_text1, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
