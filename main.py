@@ -61,7 +61,7 @@ if not small_window:
 if platform.system() != "Windows":
     background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/GO.png")
     background_stop = PhotoImage(file="/home/pi/PeopleCounter_V2/Stop.png")
-    logo = PhotoImage(file="/home/pi/PeopleCounter_V2/logo.png")
+    logo = PhotoImage(file="/home/pi/PeopleCounter_V2/Logo.png")
 else:
     background_go = PhotoImage(file="GO.png")
     background_stop = PhotoImage(file="Stop.png")
