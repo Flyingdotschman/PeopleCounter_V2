@@ -61,6 +61,7 @@ if not small_window:
 if platform.system() != "Windows":
     background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/GO.png")
     background_stop = PhotoImage(file="/home/pi/PeopleCounter_V2/Stop.png")
+    logo = PhotoImage(file="/home/pi/PeopleCounter_V2/logo.png")
 else:
     background_go = PhotoImage(file="GO.png")
     background_stop = PhotoImage(file="Stop.png")
@@ -145,14 +146,14 @@ def pin_inside_plus_resc(channel):
     inside_plus()
     print(channel)
     print("Pin Inside Plus Empfangen")
-    #root.after(1, send_counter_info, address[0])
+    # root.after(1, send_counter_info, address[0])
 
 
 def pin_inside_minus_resc(channel):
     inside_minus()
     print(channel)
     print("Pin Inside Minus Empfangen")
-    #root.after(1, send_counter_info, address[0])
+    # root.after(1, send_counter_info, address[0])
 
 
 # OSC Handler
@@ -208,7 +209,6 @@ def send_counter_info(adress_send_to):
     bundle = bundle.build()
     print("counter_info an {} gesendet mit max {} und inside {}".format(adress_send_to, max_people_allowed,
                                                                         people_inside))
-
     client.send(bundle)
 
 
@@ -237,8 +237,6 @@ def update_the_screen():
             video_player.hide_video()
         except:
             pass
-
-
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 
 
@@ -350,7 +348,6 @@ def starte_server_thread():
     run_osc_server.start()
 
 
-
 # GPIO Setup Part2
 if platform.system() != "Windows":
     pin_people_going = 16
@@ -377,6 +374,7 @@ mainCanvas.pack(fill="both", expand=True)
 root.after(3000, check_usb_stick_exists)
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
+mainCanvas.create_image(1312+(1920-1312)/2, 1080/2, image=logo, anchor="center")
 root.after(1, update_the_screen)
 # root.after(1, starte_video_player_thread)
 root.mainloop()
