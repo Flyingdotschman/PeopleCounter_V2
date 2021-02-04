@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3 -u
 
 # Stele Steuerung
 from tkinter import *
@@ -374,15 +374,6 @@ def starte_server_thread():
     run_osc_server.start()
 
 
-# Flush stdout to log_file
-def flush_to_logfile():
-    logfile = "/home/pi/log_file.log"
-    with open(logfile,"w+") as sys.stdout:
-        print("Flushing stdout to file")
-        sys.stdout.flush()
-    threading.Timer(30,flush_to_logfile)
-
-
 # GPIO Setup Part2
 if platform.system() != "Windows":
     GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -396,8 +387,6 @@ max_people_allowed, people_inside = load_last_file()
 
 # Erstellen der GUI
 mainCanvas = Canvas(root)
-flushThread = threading.Thread(target=flush_to_logfile)
-flushThread.start()
 mainCanvas.pack(fill="both", expand=True)
 root.after(3000, check_usb_stick_exists)
 root.after(2, starte_server_thread)
