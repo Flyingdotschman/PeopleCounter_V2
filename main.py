@@ -15,8 +15,6 @@ import platform
 import pickle
 from time import sleep as sleep
 
-from typing import List, Any
-
 from time import strftime
 
 from PIL import Image
@@ -63,7 +61,7 @@ root = Tk()  # TK root
 
 if not small_window:
     root.attributes('-fullscreen', True)
-    root.geometry("1090x1930")
+    #root.geometry("1090x1930")
 
 # Bilder werden geladen im Hintergrund
 if platform.system() != "Windows":
