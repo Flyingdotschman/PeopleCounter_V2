@@ -1,4 +1,4 @@
-#!/usr/bin/env python3 -u
+#!/usr/bin/env python3
 
 # Stele Steuerung
 from tkinter import *
@@ -277,6 +277,7 @@ def start_osc_server():
         local_ip = socket.gethostbyname(hostname + ".local")
     except:
         local_ip = "192.168.4.1"
+    local_ip = "192.168.4.1"
     print(local_ip)
     server = osc_server.ThreadingOSCUDPServer((local_ip, 9001), dispat)
 
