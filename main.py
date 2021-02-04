@@ -376,7 +376,10 @@ def starte_server_thread():
 
 # Flush stdout to log_file
 def flush_to_logfile():
-    sys.stdout.flush()
+    logfile = "/home/pi/log_file.log"
+    with open(logfile,"w+") as sys.stdout:
+        print("Flushing stdout to file")
+        sys.stdout.flush()
     threading.Timer(30,flush_to_logfile)
 
 
