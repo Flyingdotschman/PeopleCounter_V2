@@ -22,7 +22,6 @@ from time import strftime
 from PIL import Image
 from PIL import ImageTk
 
-
 import os
 import sys
 import stat
@@ -35,8 +34,8 @@ print("Running on {}".format(platform.system()))
 if platform.system() != "Windows":
     import RPi.GPIO as GPIO
 
-    pin_people_going = 26       # Person OUT
-    pin_people_comming = 23     # Person IN
+    pin_people_going = 26  # Person OUT
+    pin_people_comming = 23  # Person IN
 
     GPIO.setmode(GPIO.BOARD)
 
@@ -58,24 +57,24 @@ video_player = []
 
 keyboard = Controller()
 mouse = Mouse()
-mouse.position = (10000,10000)
+mouse.position = (10000, 10000)
 root = Tk()  # TK root
 
 if not small_window:
     root.attributes('-fullscreen', True)
-    #root.geometry("1090x1930")
+    # root.geometry("1090x1930")
 
 # Bilder werden geladen im Hintergrund
 if platform.system() != "Windows":
     background_go = PhotoImage(file="/home/pi/PeopleCounter_V2/Go.png")
     background_stop = PhotoImage(file="/home/pi/PeopleCounter_V2/Stop.png")
 
-    width = int((1920-1312)*.9)
+    width = int((1920 - 1312) * .9)
     height = width
     img = Image.open("/home/pi/PeopleCounter_V2/Logo.png")
     img = img.resize((width, height), Image.ANTIALIAS)
     logo = ImageTk.PhotoImage(img)
-    #logo = PhotoImage(img)
+    # logo = PhotoImage(img)
 else:
     background_go = PhotoImage(file="Go.png")
     background_stop = PhotoImage(file="Stop.png")
@@ -234,7 +233,8 @@ def update_the_screen():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         mainCanvas.create_image((1080 / 2), (1312 + (1920 - 1312) / 2), image=logo, anchor=CENTER)
         my_text1 = 'Personen'
-        mainCanvas.create_text(540, 1070, anchor=CENTER, text=my_text1, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
+        mainCanvas.create_text(540, 1070, anchor=CENTER, text=my_text1, fill='white',
+                               font='ITCAvantGardeStd-Demi 80 bold',
                                state='normal')
         my_text3 = str(max_people_allowed)
         mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
@@ -254,7 +254,6 @@ def update_the_screen():
         except:
             pass
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
-
 
 
 # Starte Server
@@ -320,7 +319,7 @@ def check_usb_stick_exists():
         walktree("/media/pi", addtolist)
         index_video = 0
         first_time_video_played = True
-        tt=threading.Thread(target=start_video_player)
+        tt = threading.Thread(target=start_video_player)
         tt.start()
 
     else:
@@ -342,7 +341,9 @@ def start_video_player():
             video_player_playing = False
         print(video_player_playing)
         if not video_player_playing:
-            video_player = OMXPlayer(filey, args=['--orientation','270','--win','1312,0,1920,1080','--no-osd','--vol','-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
+            video_player = OMXPlayer(filey,
+                                     args=['--orientation', '270', '--win', '1312,0,1920,1080', '--no-osd', '--vol',
+                                           '-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
 
         else:
             video_player.load(filey)
@@ -367,7 +368,6 @@ def starte_server_thread():
 
 # GPIO Setup Part2
 if platform.system() != "Windows":
-
     GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
@@ -384,8 +384,8 @@ mainCanvas.pack(fill="both", expand=True)
 root.after(3000, check_usb_stick_exists)
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
-#mainCanvas.create_image(1312+(1920-1312)/2, 1080/2, image=logo, anchor="center")
-#mainCanvas.create_image(50, 50, image=logo, anchor="center")
+# mainCanvas.create_image(1312+(1920-1312)/2, 1080/2, image=logo, anchor="center")
+# mainCanvas.create_image(50, 50, image=logo, anchor="center")
 root.after(1, update_the_screen)
 # root.after(1, starte_video_player_thread)
 root.mainloop()
