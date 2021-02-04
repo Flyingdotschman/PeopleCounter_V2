@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+# Stele Steuerung
 from tkinter import *
 from tkinter import font as font
 import socket
