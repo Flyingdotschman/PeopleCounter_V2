@@ -272,7 +272,7 @@ def start_osc_server():
     dispat.map("/counter/counter_info", got_counter_info, needs_reply_address=True)
     try:
         hostname = socket.gethostname()
-        local_ip = socket.gethostbyname(hostname)
+        local_ip = socket.gethostbyname(hostname + ".local")
     except:
         local_ip = "192.168.4.1"
     print(local_ip)
