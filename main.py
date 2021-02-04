@@ -33,7 +33,7 @@ from pynput.keyboard import Key, Controller
 from pynput.mouse import Controller as Mouse
 
 # GPIO Setups Part 1
-print("Running on {}".format(platform.system()))
+print("Running on {}".format(platform.system()), flush=True)
 if platform.system() != "Windows":
     import RPi.GPIO as GPIO
 
@@ -160,22 +160,22 @@ def max_people_reached():
 # PIN EVENT HANLDER
 def pin_inside_plus_resc(channel):
     inside_plus()
-    print(channel)
-    print("Pin Inside Plus Empfangen")
+    print(channel, flush=True)
+    print("Pin Inside Plus Empfangen", flush=True)
     # root.after(1, send_counter_info, address[0])
 
 
 def pin_inside_minus_resc(channel):
     inside_minus()
-    print(channel)
-    print("Pin Inside Minus Empfangen")
+    print(channel, flush=True)
+    print("Pin Inside Minus Empfangen",flush=True)
     # root.after(1, send_counter_info, address[0])
 
 
 # OSC Handler
 def got_set_inside(address: str, *args: List[Any]) -> None:
     if len(args) > 0:
-        print(args)
+        print(args,flush=True)
         inside = args[1]
         set_inside(inside)
         root.after(1, send_counter_info, address[0])
@@ -183,7 +183,7 @@ def got_set_inside(address: str, *args: List[Any]) -> None:
 
 def got_set_maximum(address: str, *args: List[Any]) -> None:
     if len(args) > 0:
-        print(args)
+        print(args,flush=True)
         maximum = args[1]
         set_maximum(maximum)
         root.after(1, send_counter_info, address[0])
@@ -224,7 +224,7 @@ def send_counter_info(adress_send_to):
     bundle.add_content(msg.build())
     bundle = bundle.build()
     print("counter_info an {} gesendet mit max {} und inside {}".format(adress_send_to, max_people_allowed,
-                                                                        people_inside))
+                                                                        people_inside), flush=True)
     client.send(bundle)
 
 
@@ -262,7 +262,7 @@ def update_the_screen():
 # Starte Server
 def start_osc_server():
     global server
-    print("*** STARTE OSC SERVER ***")
+    print("*** STARTE OSC SERVER ***",flush=True)
     dispat = dispatcher.Dispatcher()
 
     dispat.map("/counter/reset_inside", got_set_inside, needs_reply_address=True)
@@ -278,7 +278,7 @@ def start_osc_server():
     except:
         local_ip = "192.168.4.1"
     local_ip = "192.168.4.1"
-    print(local_ip)
+    print(local_ip,flush=True)
     server = osc_server.ThreadingOSCUDPServer((local_ip, 9001), dispat)
 
     server.serve_forever()
@@ -312,13 +312,13 @@ def addtolist(file, extensions=['.mp4']):
     e = ext.lower()
     # Only add common image types to the list.
     if e in extensions:
-        print('Adding to list: ', file)
+        print('Adding to list: ', file,flush=True)
         file_list.append(file)
 
 
 def check_usb_stick_exists():
     global index_video, first_time_video_played
-    print("Checking for USB")
+    print("Checking for USB", flush=True)
     if len(os.listdir("/media/pi")) > 0:
         walktree("/media/pi", addtolist)
         index_video = 0
@@ -332,9 +332,10 @@ def check_usb_stick_exists():
 
 def start_video_player():
     global file_list, video_player, index_video, first_time_video_played
-    print("VIDEO")
+
     if os.path.exists(file_list[index_video]):
         filey = file_list[index_video]
+        print("VIDEO Playing {}".format(filey),  flush=True)
         index_video = index_video + 1
         if index_video > len(file_list) - 1:
             index_video = 0
@@ -356,9 +357,9 @@ def start_video_player():
             duration_of_video = video_player.duration() + 3
         except:
             duration_of_video = 3
-            print("duration of video failed")
+            print("duration of video failed",  flush=True)
 
-        print(duration_of_video)
+        print(duration_of_video,  flush=True)
         video_player.mute()
         if max_people_reached():
             video_player.hide_video()
