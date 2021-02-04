@@ -336,6 +336,7 @@ def start_video_player():
     if os.path.exists(file_list[index_video]):
         filey = file_list[index_video]
         print("VIDEO Playing {}".format(filey),  flush=True)
+
         index_video = index_video + 1
         if index_video > len(file_list) - 1:
             index_video = 0
