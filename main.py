@@ -351,7 +351,12 @@ def start_video_player():
         else:
             video_player.load(filey)
 
-        duration_of_video = video_player.duration() + 3
+        try:
+            duration_of_video = video_player.duration() + 3
+        except:
+            duration_of_video = 3
+            print("duration of video failed")
+
         print(duration_of_video)
         video_player.mute()
         if max_people_reached():
@@ -369,6 +374,12 @@ def starte_server_thread():
     run_osc_server.start()
 
 
+# Flush stdout to log_file
+def flush_to_logfile():
+    sys.stdout.flush()
+    threading.Timer(30,flush_to_logfile)
+
+
 # GPIO Setup Part2
 if platform.system() != "Windows":
     GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -382,7 +393,8 @@ max_people_allowed, people_inside = load_last_file()
 
 # Erstellen der GUI
 mainCanvas = Canvas(root)
-
+flushThread = threading.Thread(target=flush_to_logfile)
+flushThread.start()
 mainCanvas.pack(fill="both", expand=True)
 root.after(3000, check_usb_stick_exists)
 root.after(2, starte_server_thread)
