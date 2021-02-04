@@ -15,6 +15,8 @@ import platform
 import pickle
 from time import sleep as sleep
 
+from typing import List, Any
+
 from time import strftime
 
 from PIL import Image
