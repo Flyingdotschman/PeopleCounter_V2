@@ -374,10 +374,10 @@ def start_video_player():
                 sleep(duration_of_video)
             else:
                 running = False
-                root.after(1000, check_usb_stick_exists)
+                #root.after(1000, check_usb_stick_exists)
         else:
             running = False
-            root.after(1000, check_usb_stick_exists)
+            #root.after(1000, check_usb_stick_exists)
 
 
 def starte_server_thread():
