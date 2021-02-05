@@ -365,6 +365,9 @@ def start_video_player():
             if max_people_reached():
                 video_player.hide_video()
             threading.Timer(duration_of_video, start_video_player).start()
+    else:
+        root.after(1000, check_usb_stick_exists)
+
 
 
 
