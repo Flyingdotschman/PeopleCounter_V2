@@ -333,6 +333,7 @@ def check_usb_stick_exists():
 
 def start_video_player():
     global file_list, video_player, index_video, first_time_video_played
+    print("Laenge von Filelist: {}".format(len(file_list)))
     if len(file_list) > 0:
         print("File exists: {}".format(os.path.exists(file_list[index_video])))
         if os.path.exists(file_list[index_video]):
