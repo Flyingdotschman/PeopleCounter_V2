@@ -20,7 +20,7 @@ from time import sleep as sleep
 
 from typing import List, Any
 
-from time import strftime
+#from time import sleep
 
 from PIL import Image
 from PIL import ImageTk
@@ -334,44 +334,48 @@ def check_usb_stick_exists():
 def start_video_player():
     global file_list, video_player, index_video, first_time_video_played
     print("Laenge von Filelist: {}".format(len(file_list)))
-    if len(file_list) > 0:
-        print("File exists: {}".format(os.path.exists(file_list[index_video])))
-        if os.path.exists(file_list[index_video]):
-            filey = file_list[index_video]
-            print("VIDEO Playing {}".format(filey),  flush=True)
+    running = True
+    while running:
+        if len(file_list) > 0:
+            print("File exists: {}".format(os.path.exists(file_list[index_video])))
+            if os.path.exists(file_list[index_video]):
+                filey = file_list[index_video]
+                print("VIDEO Playing {}".format(filey),  flush=True)
 
-            index_video = index_video + 1
-            if index_video > len(file_list) - 1:
-                index_video = 0
+                index_video = index_video + 1
+                if index_video > len(file_list) - 1:
+                    index_video = 0
 
-            try:
-                video_player_playing = video_player.is_playing()
-            except:
-                video_player_playing = False
-            print(video_player_playing)
-            if not video_player_playing:
-                video_player = OMXPlayer(filey,
-                                         args=['--orientation', '270', '--win', '1312,0,1920,1080', '--no-osd', '--vol',
-                                               '-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
+                try:
+                    video_player_playing = video_player.is_playing()
+                except:
+                    video_player_playing = False
+                print(video_player_playing)
+                if not video_player_playing:
+                    video_player = OMXPlayer(filey,
+                                             args=['--orientation', '270', '--win', '1312,0,1920,1080', '--no-osd', '--vol',
+                                                   '-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
 
+                else:
+                    video_player.load(filey)
+
+                try:
+                    duration_of_video = video_player.duration() + 3
+                except:
+                    duration_of_video = 3
+                    print("duration of video failed",  flush=True)
+
+                print(duration_of_video,  flush=True)
+                video_player.mute()
+                if max_people_reached():
+                    video_player.hide_video()
+                sleep(duration_of_video)
             else:
-                video_player.load(filey)
-
-            try:
-                duration_of_video = video_player.duration() + 3
-            except:
-                duration_of_video = 3
-                print("duration of video failed",  flush=True)
-
-            print(duration_of_video,  flush=True)
-            video_player.mute()
-            if max_people_reached():
-                video_player.hide_video()
-            threading.Timer(duration_of_video, start_video_player).start()
+                running = False
+                root.after(1000, check_usb_stick_exists)
         else:
+            running = False
             root.after(1000, check_usb_stick_exists)
-    else:
-        root.after(1000, check_usb_stick_exists)
 
 
 def starte_server_thread():
