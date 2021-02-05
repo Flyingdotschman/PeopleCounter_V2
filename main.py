@@ -397,7 +397,7 @@ def checkifvideoplayerisallive():
     while True:
         if not videoplayerthread.is_alive():
             root.after(1000, check_usb_stick_exists)
-        sleep(10)
+        sleep(2)
 
 
 # GPIO Setup Part2
