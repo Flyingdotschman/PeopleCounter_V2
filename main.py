@@ -379,9 +379,10 @@ def starte_server_thread():
 
 def checkifvideoplayerisallive():
     global videoplayerthread
-    if not videoplayerthread.is_alive():
-        root.after(1000, check_usb_stick_exists)
-    sleep(1)
+    while True:
+        if not videoplayerthread.is_alive():
+            root.after(1000, check_usb_stick_exists)
+        sleep(1)
 
 
 # GPIO Setup Part2
