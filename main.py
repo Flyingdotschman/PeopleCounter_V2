@@ -317,14 +317,15 @@ def addtolist(file, extensions=['.mp4']):
 
 
 def check_usb_stick_exists():
-    global index_video, first_time_video_played
+    global index_video, first_time_video_played, videoplayerthread
     print("Checking for USB", flush=True)
     if len(os.listdir("/media/pi")) > 0:
         walktree("/media/pi", addtolist)
         index_video = 0
         first_time_video_played = True
-        tt = threading.Thread(target=start_video_player)
-        tt.start()
+        #tt = threading.Thread(target=start_video_player)
+        #tt.start()
+        videoplayerthread.start()
 
     else:
         root.after(1000, check_usb_stick_exists)
@@ -376,6 +377,13 @@ def starte_server_thread():
     run_osc_server.start()
 
 
+def checkifvideoplayerisallive():
+    global videoplayerthread
+    if not videoplayerthread.is_alive():
+        root.after(1000, check_usb_stick_exists)
+    sleep(1)
+
+
 # GPIO Setup Part2
 if platform.system() != "Windows":
     GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -386,7 +394,7 @@ if platform.system() != "Windows":
 
 # Lade Save File und letzte bekannte Besucher
 max_people_allowed, people_inside = load_last_file()
-
+videoplayerthread = threading.Thread(target=start_video_player)
 # Erstellen der GUI
 mainCanvas = Canvas(root)
 mainCanvas.pack(fill="both", expand=True)
