@@ -397,6 +397,8 @@ if platform.system() != "Windows":
 # Lade Save File und letzte bekannte Besucher
 max_people_allowed, people_inside = load_last_file()
 videoplayerthread = threading.Thread(target=start_video_player)
+checkifvideoplayerisalliveTread = threading.Thread(target=checkifvideoplayerisallive)
+checkifvideoplayerisalliveTread.start()
 # Erstellen der GUI
 mainCanvas = Canvas(root)
 mainCanvas.pack(fill="both", expand=True)
