@@ -20,7 +20,7 @@ from time import sleep as sleep
 
 from typing import List, Any
 
-#from time import sleep
+# from time import sleep
 
 from PIL import Image
 from PIL import ImageTk
@@ -39,6 +39,8 @@ if platform.system() != "Windows":
 
     pin_people_going = 26  # Person OUT
     pin_people_comming = 23  # Person IN
+
+    pin_buzzer = 31  # Buzzer pin
 
     GPIO.setmode(GPIO.BOARD)
 
@@ -162,20 +164,22 @@ def pin_inside_plus_resc(channel):
     inside_plus()
     print(channel, flush=True)
     print("Pin Inside Plus Empfangen", flush=True)
+    threading.Timer(1, beep_buzzer)
     # root.after(1, send_counter_info, address[0])
 
 
 def pin_inside_minus_resc(channel):
     inside_minus()
     print(channel, flush=True)
-    print("Pin Inside Minus Empfangen",flush=True)
+    print("Pin Inside Minus Empfangen", flush=True)
+    threading.Timer(1, beep_buzzer)
     # root.after(1, send_counter_info, address[0])
 
 
 # OSC Handler
 def got_set_inside(address: str, *args: List[Any]) -> None:
     if len(args) > 0:
-        print(args,flush=True)
+        print(args, flush=True)
         inside = args[1]
         set_inside(inside)
         root.after(1, send_counter_info, address[0])
@@ -183,7 +187,7 @@ def got_set_inside(address: str, *args: List[Any]) -> None:
 
 def got_set_maximum(address: str, *args: List[Any]) -> None:
     if len(args) > 0:
-        print(args,flush=True)
+        print(args, flush=True)
         maximum = args[1]
         set_maximum(maximum)
         root.after(1, send_counter_info, address[0])
@@ -262,7 +266,7 @@ def update_the_screen():
 # Starte Server
 def start_osc_server():
     global server
-    print("*** STARTE OSC SERVER ***",flush=True)
+    print("*** STARTE OSC SERVER ***", flush=True)
     dispat = dispatcher.Dispatcher()
 
     dispat.map("/counter/reset_inside", got_set_inside, needs_reply_address=True)
@@ -278,7 +282,7 @@ def start_osc_server():
     except:
         local_ip = "192.168.4.1"
     local_ip = "192.168.4.1"
-    print(local_ip,flush=True)
+    print(local_ip, flush=True)
     server = osc_server.ThreadingOSCUDPServer((local_ip, 9001), dispat)
 
     server.serve_forever()
@@ -312,7 +316,7 @@ def addtolist(file, extensions=['.mp4']):
     e = ext.lower()
     # Only add common image types to the list.
     if e in extensions:
-        print('Adding to list: ', file,flush=True)
+        print('Adding to list: ', file, flush=True)
         file_list.append(file)
 
 
@@ -325,8 +329,8 @@ def check_usb_stick_exists():
         if len(os.listdir(direc + f)) > 0:
             walktree("/media/pi", addtolist)
             print("Checking for mp4")
-            #tt = threading.Thread(target=start_video_player)
-            #tt.start()
+            # tt = threading.Thread(target=start_video_player)
+            # tt.start()
             if not videoplayerthread.is_alive():
                 print("Videoplayer Dead, restarting")
                 first_time_video_played = True
@@ -335,8 +339,8 @@ def check_usb_stick_exists():
                 videoplayerthread.start()
                 break
 
-    #else:
-        #root.after(1000, check_usb_stick_exists)
+    # else:
+    # root.after(1000, check_usb_stick_exists)
 
 
 def start_video_player():
@@ -348,7 +352,7 @@ def start_video_player():
             print("File exists: {}".format(os.path.exists(file_list[index_video])))
             if os.path.exists(file_list[index_video]):
                 filey = file_list[index_video]
-                print("VIDEO Playing {}".format(filey),  flush=True)
+                print("VIDEO Playing {}".format(filey), flush=True)
 
                 index_video = index_video + 1
                 if index_video > len(file_list) - 1:
@@ -361,7 +365,8 @@ def start_video_player():
                 print(video_player_playing)
                 if not video_player_playing:
                     video_player = OMXPlayer(filey,
-                                             args=['--orientation', '270', '--win', '1312,0,1920,1080', '--no-osd', '--vol',
+                                             args=['--orientation', '270', '--win', '1312,0,1920,1080', '--no-osd',
+                                                   '--vol',
                                                    '-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
 
                 else:
@@ -371,19 +376,19 @@ def start_video_player():
                     duration_of_video = video_player.duration() + 3
                 except:
                     duration_of_video = 3
-                    print("duration of video failed",  flush=True)
+                    print("duration of video failed", flush=True)
 
-                print(duration_of_video,  flush=True)
+                print(duration_of_video, flush=True)
                 video_player.mute()
                 if max_people_reached():
                     video_player.hide_video()
                 sleep(duration_of_video)
             else:
                 running = False
-                #root.after(1000, check_usb_stick_exists)
+                # root.after(1000, check_usb_stick_exists)
         else:
             running = False
-            #root.after(1000, check_usb_stick_exists)
+            # root.after(1000, check_usb_stick_exists)
 
 
 def starte_server_thread():
@@ -400,10 +405,21 @@ def checkifvideoplayerisallive():
         sleep(2)
 
 
+def beep_buzzer():
+    global pin_buzzer
+    print("BEEP")
+    GPIO.output(pin_buzzer, 1)
+    sleep(0.1)
+    GPIO.output(pin_buzzer, 0)
+
+
 # GPIO Setup Part2
 if platform.system() != "Windows":
     GPIO.setup(pin_people_going, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(pin_people_comming, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+    GPIO.setup(pin_buzzer, GPIO.OUT)
+    GPIO.output(pin_buzzer, 0)
 
     GPIO.add_event_detect(pin_people_going, GPIO.RISING, callback=pin_inside_minus_resc)
     GPIO.add_event_detect(pin_people_comming, GPIO.RISING, callback=pin_inside_plus_resc)
