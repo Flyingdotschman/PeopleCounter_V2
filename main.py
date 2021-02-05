@@ -324,7 +324,7 @@ def check_usb_stick_exists():
     for f in os.listdir(direc):
         if len(os.listdir(direc + f)) > 0:
             walktree("/media/pi", addtolist)
-
+            print("Checking for mp4")
             #tt = threading.Thread(target=start_video_player)
             #tt.start()
             if not videoplayerthread.is_alive():
