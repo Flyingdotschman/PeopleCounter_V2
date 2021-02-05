@@ -164,7 +164,9 @@ def pin_inside_plus_resc(channel):
     inside_plus()
     print(channel, flush=True)
     print("Pin Inside Plus Empfangen", flush=True)
-    threading.Timer(1, beep_buzzer)
+    #threading.Timer(.01, beep_buzzer).start()
+    t = threading.Thread(target=beep_buzzer)
+    t.start()
     # root.after(1, send_counter_info, address[0])
 
 
@@ -172,7 +174,9 @@ def pin_inside_minus_resc(channel):
     inside_minus()
     print(channel, flush=True)
     print("Pin Inside Minus Empfangen", flush=True)
-    threading.Timer(1, beep_buzzer)
+    #threading.Timer(.01, beep_buzzer).start()
+    t = threading.Thread(target=beep_buzzer)
+    t.start()
     # root.after(1, send_counter_info, address[0])
 
 
