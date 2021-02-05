@@ -332,7 +332,7 @@ def check_usb_stick_exists():
 
 def start_video_player():
     global file_list, video_player, index_video, first_time_video_played
-    if len(file_list)>0:
+    if len(file_list) > 0:
         if os.path.exists(file_list[index_video]):
             filey = file_list[index_video]
             print("VIDEO Playing {}".format(filey),  flush=True)
@@ -365,12 +365,8 @@ def start_video_player():
             if max_people_reached():
                 video_player.hide_video()
             threading.Timer(duration_of_video, start_video_player).start()
-    else:
-        root.after(1000, check_usb_stick_exists)
-
-
-
-
+        else:
+            root.after(1000, check_usb_stick_exists)
     else:
         root.after(1000, check_usb_stick_exists)
 
