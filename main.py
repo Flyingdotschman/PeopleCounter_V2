@@ -325,7 +325,8 @@ def check_usb_stick_exists():
         first_time_video_played = True
         #tt = threading.Thread(target=start_video_player)
         #tt.start()
-        videoplayerthread.start()
+        if not videoplayerthread.is_alive():
+            videoplayerthread.start()
 
     else:
         root.after(1000, check_usb_stick_exists)
