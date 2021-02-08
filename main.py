@@ -253,7 +253,7 @@ def update_the_screen():
         mainCanvas.create_image((1080 / 2), (1312 + (1920 - 1312) / 2), image=logo, anchor=CENTER)
         my_text1 = 'PERSONEN'
         mainCanvas.create_text(540, 1070, anchor=CENTER, text=my_text1, fill='white',
-                               font=('adineue PRO Bold', 80),
+                               font=('adineue PRO Bold', 80,'bold'),
                                state='normal')
         my_text3 = str(max_people_allowed)
         mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font=('adineue PRO Bold', 80,'bold'), state='normal')
