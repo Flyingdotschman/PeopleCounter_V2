@@ -251,7 +251,7 @@ def update_the_screen():
     if not max_people_reached():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         mainCanvas.create_image((1080 / 2), (1312 + (1920 - 1312) / 2), image=logo, anchor=CENTER)
-        my_text1 = 'Personen'
+        my_text1 = 'PERSONEN'
         mainCanvas.create_text(540, 1070, anchor=CENTER, text=my_text1, fill='white',
                                font=('adineue PRO Bold', 80),
                                state='normal')
