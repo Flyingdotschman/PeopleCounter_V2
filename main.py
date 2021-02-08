@@ -411,6 +411,7 @@ def usb_video_handler():
     global videoplayerthread, video_player
 
     while True:
+        print("usb_vide_handler Go")
         if check_usb_stick_exists():
     # tt = threading.Thread(target=start_video_player)
         # tt.start()
