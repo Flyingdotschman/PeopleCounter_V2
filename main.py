@@ -413,7 +413,7 @@ def checkifvideoplayerisallive():
     while True:
         if not videoplayerthread.is_alive():
             root.after(1000, check_usb_stick_exists)
-        sleep(2)
+        sleep(10)
 
 
 def beep_buzzer():
