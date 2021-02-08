@@ -48,7 +48,7 @@ if platform.system() != "Windows":
 
 small_window = False
 
-myfont = font.Font("/home/pi/PeopleCounter_V2/otherfont.otf")
+myfont = font.Font("/home/pi/PeopleCounter_V2/otherfont.otf", 80)
 
 
 # First Variables definition
@@ -248,13 +248,12 @@ def update_the_screen():
         mainCanvas.create_image((1080 / 2), (1312 + (1920 - 1312) / 2), image=logo, anchor=CENTER)
         my_text1 = 'Personen'
         mainCanvas.create_text(540, 1070, anchor=CENTER, text=my_text1, fill='white',
-                               font='ITCAvantGardeStd-Demi 80 bold',
+                               font=myfont,
                                state='normal')
         my_text3 = str(max_people_allowed)
-        mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
-                               state='normal')
+        mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font=myfont, state='normal')
         my_text3 = str(people_inside) + "/"
-        mainCanvas.create_text(540, 900, anchor=NE, text=my_text3, fill='white', font='ITCAvantGardeStd-Demi 80 bold',
+        mainCanvas.create_text(540, 900, anchor=NE, text=my_text3, fill='white', font=myfont,
                                state='normal')
         try:
 
