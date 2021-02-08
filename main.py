@@ -443,7 +443,7 @@ checkifvideoplayerisalliveTread.start()
 # Erstellen der GUI
 mainCanvas = Canvas(root)
 mainCanvas.pack(fill="both", expand=True)
-root.after(3000, check_usb_stick_exists)
+#root.after(3000, check_usb_stick_exists)
 root.after(2, starte_server_thread)
 mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
 # mainCanvas.create_image(1312+(1920-1312)/2, 1080/2, image=logo, anchor="center")
