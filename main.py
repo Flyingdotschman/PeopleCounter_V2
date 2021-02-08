@@ -338,17 +338,8 @@ def check_usb_stick_exists():
     direc = "/media/pi/"
     for f in os.listdir(direc):
         if len(os.listdir(direc + f)) > 0:
-            walktree("/media/pi", addtolist)
-            print("Checking for mp4")
-            # tt = threading.Thread(target=start_video_player)
-            # tt.start()
-            if not videoplayerthread.is_alive():
-                print("Videoplayer Dead, restarting")
-                first_time_video_played = True
-                index_video = 0
-                videoplayerthread = threading.Thread(target=start_video_player)
-                videoplayerthread.start()
-                break
+           return True
+    return False
 
     # else:
     # root.after(1000, check_usb_stick_exists)
@@ -416,6 +407,29 @@ def checkifvideoplayerisallive():
         sleep(10)
 
 
+def usb_video_handler():
+    global videoplayerthread, video_player
+
+    while True:
+        if check_usb_stick_exists():
+    # tt = threading.Thread(target=start_video_player)
+        # tt.start()
+            if not videoplayerthread.is_alive():
+                walktree("/media/pi", addtolist)
+                print("Checking for mp4")
+                print("Videoplayer Dead, restarting")
+                first_time_video_played = True
+                index_video = 0
+                videoplayerthread = threading.Thread(target=start_video_player)
+                videoplayerthread.start()
+        else:
+            if videoplayerthread.is_alive():
+                video_player.stop()
+
+        sleep(1)
+
+
+
 def beep_buzzer():
     global pin_buzzer
     print("BEEP")
@@ -438,7 +452,7 @@ if platform.system() != "Windows":
 # Lade Save File und letzte bekannte Besucher
 max_people_allowed, people_inside = load_last_file()
 videoplayerthread = threading.Thread(target=start_video_player)
-checkifvideoplayerisalliveTread = threading.Thread(target=checkifvideoplayerisallive)
+checkifvideoplayerisalliveTread = threading.Thread(target=usb_video_handler)
 checkifvideoplayerisalliveTread.start()
 # Erstellen der GUI
 mainCanvas = Canvas(root)
