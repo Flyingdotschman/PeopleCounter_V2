@@ -256,9 +256,9 @@ def update_the_screen():
                                font=('adineue PRO Bold', 80),
                                state='normal')
         my_text3 = str(max_people_allowed)
-        mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font=('adineue PRO Bold', 80), state='normal')
+        mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font=('adineue PRO Bold', 80,'bold'), state='normal')
         my_text3 = str(people_inside) + "/"
-        mainCanvas.create_text(540, 900, anchor=NE, text=my_text3, fill='white',  font=('adineue PRO Bold', 80),
+        mainCanvas.create_text(540, 900, anchor=NE, text=my_text3, fill='white',  font=('adineue PRO Bold', 80, 'bold'),
                                state='normal')
         try:
 
