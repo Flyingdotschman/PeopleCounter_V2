@@ -48,6 +48,9 @@ if platform.system() != "Windows":
 
 small_window = False
 
+myfont = font.Font("/home/pi/PeopleCounter_V2/otherfont.otf")
+
+
 # First Variables definition
 
 max_people_allowed = 0  # Maximale Anzahl drinnen befiindlicher Personen
