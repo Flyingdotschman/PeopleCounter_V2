@@ -11,6 +11,8 @@ from pythonosc import dispatcher, osc_server
 
 from omxplayer.player import OMXPlayer
 
+import pyglet
+
 import threading
 
 import platform
@@ -48,7 +50,10 @@ if platform.system() != "Windows":
 
 small_window = False
 
-myfont = font.Font("/home/pi/PeopleCounter_V2/otherfont.otf", 80)
+font_file = "/home/pi/PeopleCounter_V2/otherfont.otf"
+
+pyglet.font.add_file(font_file)
+myfont = pyglet.font.load('adineue PRO Bold')
 
 
 # First Variables definition
