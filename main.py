@@ -254,12 +254,12 @@ def update_the_screen():
         my_text1 = 'Personen'
         mainCanvas.create_text(540, 1070, anchor=CENTER, text=my_text1, fill='white',
                                font=('adineue PRO Bold', 80),
-                               state='bold')
+                               state='normal')
         my_text3 = str(max_people_allowed)
-        mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font=('adineue PRO Bold', 80), state='bold')
+        mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font=('adineue PRO Bold', 80), state='normal')
         my_text3 = str(people_inside) + "/"
         mainCanvas.create_text(540, 900, anchor=NE, text=my_text3, fill='white',  font=('adineue PRO Bold', 80),
-                               state='bold')
+                               state='normal')
         try:
 
             video_player.show_video()
