@@ -425,7 +425,7 @@ def usb_video_handler():
                 videoplayerthread.start()
         else:
             if videoplayerthread.is_alive():
-                print("Tryong to Stop Video")
+                print("Trying to Stop Video")
                 video_player.stop()
 
         sleep(1)
