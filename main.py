@@ -117,7 +117,7 @@ def save_last_file(maximum, inside):  # Speicher Anzahl in reset/save.pkl
 
 def inside_plus():
     global people_inside
-    if people_inside < 1000:
+    if people_inside < 1100:
         people_inside = people_inside + 1
     save_last_file(max_people_allowed, people_inside)
     root.after(1, update_the_screen)
@@ -196,7 +196,7 @@ def got_set_inside(address: str, *args: List[Any]) -> None:
         print(args, flush=True)
         inside = args[1]
         set_inside(inside)
-        root.after(1, send_counter_info, address[0])
+        root.after(100, send_counter_info, address[0])
 
 
 def got_set_maximum(address: str, *args: List[Any]) -> None:
@@ -204,31 +204,33 @@ def got_set_maximum(address: str, *args: List[Any]) -> None:
         print(args, flush=True)
         maximum = args[1]
         set_maximum(maximum)
-        root.after(1, send_counter_info, address[0])
+        root.after(100, send_counter_info, address[0])
 
 
 def got_maximum_plus(address: str, *args: List[Any]) -> None:
     maximum_plus()
-    root.after(1, send_counter_info, address[0])
+    root.after(100, send_counter_info, address[0])
 
 
 def got_maximum_minus(address: str, *args: List[Any]) -> None:
     maximum_minus()
-    root.after(1, send_counter_info, address[0])
+    root.after(100, send_counter_info, address[0])
 
 
 def got_inside_plus(address: str, *args: List[Any]) -> None:
     inside_plus()
-    root.after(1, send_counter_info, address[0])
+    root.after(100, send_counter_info, address[0])
 
 
 def got_inside_minus(address: str, *args: List[Any]) -> None:
     inside_minus()
-    root.after(1, send_counter_info, address[0])
+    root.after(100, send_counter_info, address[0])
 
 
 def got_counter_info(address: str, *args: List[Any]) -> None:
-    root.after(1, send_counter_info, address[0])
+    t = threading.Thread(target=send_counter_info, args=(address[0]))
+    t.start()
+    #root.after(1, send_counter_info, address[0])
 
 
 # Sende Counter zurück an Sender
