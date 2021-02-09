@@ -406,6 +406,7 @@ def starte_server_thread():
 def checkifvideoplayerisallive():
     global videoplayerthread
     print(videoplayerthread.is_alive())
+    print("poop")
     while True:
         if not videoplayerthread.is_alive():
             root.after(1000, check_usb_stick_exists)
