@@ -109,9 +109,10 @@ def load_last_file():  # Laed den letzten Stand der Perseonen
 
 
 def save_last_file(maximum, inside):  # Speicher Anzahl in reset/save.pkl
-
+    print("Starte Speichern")
     with open("/home/pi/PeopleCounter_V2/reset/save.pkl", "wb+") as f:
         pickle.dump([maximum, inside], f)
+    print("Ende Speichern")
 
 
 def inside_plus():
@@ -124,6 +125,7 @@ def inside_plus():
 
 def inside_minus():
     global people_inside
+    print("Inside ein absziehen")
     if people_inside > 0:
         people_inside = people_inside - 1
     save_last_file(max_people_allowed, people_inside)
@@ -248,6 +250,7 @@ def send_counter_info(adress_send_to):
 def update_the_screen():
     global max_people_allowed, people_inside
     global mainCanvas, video_player
+    print("Starte Screen zeichnen")
     if not max_people_reached():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
         mainCanvas.create_image((1080 / 2), (1312 + (1920 - 1312) / 2), image=logo, anchor=CENTER)
@@ -272,7 +275,7 @@ def update_the_screen():
         except:
             pass
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
-
+    print("Ende Screen zeichnen")
 
 # Starte Server
 def start_osc_server():
@@ -386,7 +389,8 @@ def start_video_player():
                 if max_people_reached():
                     video_player.hide_video()
                 sleep(duration_of_video)
-
+        else:
+            break
 
 
 def starte_server_thread():
