@@ -253,7 +253,9 @@ def update_the_screen():
     print("Starte Screen zeichnen")
     if not max_people_reached():
         mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
+        print("Background done")
         mainCanvas.create_image((1080 / 2), (1312 + (1920 - 1312) / 2), image=logo, anchor=CENTER)
+        print("Logo done")
         my_text1 = 'PERSONEN'
         mainCanvas.create_text(540, 1070, anchor=CENTER, text=my_text1, fill='white',
                                font=('adineue PRO Bold', 80,'bold'),
@@ -263,9 +265,11 @@ def update_the_screen():
         my_text3 = str(people_inside) + "/"
         mainCanvas.create_text(540, 900, anchor=NE, text=my_text3, fill='white',  font=('adineue PRO Bold', 80, 'bold'),
                                state='normal')
+        print("Text done")
         try:
 
             video_player.show_video()
+            print("Show Video done")
         except:
             pass
 
