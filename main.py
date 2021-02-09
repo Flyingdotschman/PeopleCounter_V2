@@ -196,7 +196,8 @@ def got_set_inside(address: str, *args: List[Any]) -> None:
         print(args, flush=True)
         inside = args[1]
         set_inside(inside)
-        root.after(100, send_counter_info, address[0])
+        t = threading.Thread(target=send_counter_info, args=(address[0],))
+        t.start()
 
 
 def got_set_maximum(address: str, *args: List[Any]) -> None:
@@ -204,27 +205,32 @@ def got_set_maximum(address: str, *args: List[Any]) -> None:
         print(args, flush=True)
         maximum = args[1]
         set_maximum(maximum)
-        root.after(100, send_counter_info, address[0])
+        t = threading.Thread(target=send_counter_info, args=(address[0],))
+        t.start()
 
 
 def got_maximum_plus(address: str, *args: List[Any]) -> None:
     maximum_plus()
-    root.after(100, send_counter_info, address[0])
+    t = threading.Thread(target=send_counter_info, args=(address[0],))
+    t.start()
 
 
 def got_maximum_minus(address: str, *args: List[Any]) -> None:
     maximum_minus()
-    root.after(100, send_counter_info, address[0])
+    t = threading.Thread(target=send_counter_info, args=(address[0],))
+    t.start()
 
 
 def got_inside_plus(address: str, *args: List[Any]) -> None:
     inside_plus()
-    root.after(100, send_counter_info, address[0])
+    t = threading.Thread(target=send_counter_info, args=(address[0],))
+    t.start()
 
 
 def got_inside_minus(address: str, *args: List[Any]) -> None:
     inside_minus()
-    root.after(100, send_counter_info, address[0])
+    t = threading.Thread(target=send_counter_info, args=(address[0],))
+    t.start()
 
 
 def got_counter_info(address: str, *args: List[Any]) -> None:
