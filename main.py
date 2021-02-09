@@ -275,6 +275,7 @@ def update_the_screen():
         except:
             pass
         mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
+    root.update()
     print("Ende Screen zeichnen")
 
 # Starte Server
