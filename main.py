@@ -263,7 +263,7 @@ def update_the_screen():
     if not max_people_reached():
         mainCanvas.itemconfigure(backgroud_stele, image=background_go)
         print("Background done")
-        mainCanvas.itemconfigure(logo_bottom, image=logo, state='normal')
+        mainCanvas.itemconfigure(logo_bottom, state='normal')
         print("Logo done")
         my_text = 'PERSONEN'
         mainCanvas.itemconfigure(personen_text, text=my_text, state='normal')
@@ -285,6 +285,7 @@ def update_the_screen():
         except:
             pass
         mainCanvas.itemconfigure(backgroud_stele, image=background_stop)
+        mainCanvas.itemconfigure(logo_bottom, state='hidden')
         mainCanvas.itemconfigure(personen_text, state='hidden')
         mainCanvas.itemconfigure(numbers_right, state='hidden')
         mainCanvas.itemconfigure(numbers_left, state='hidden')
