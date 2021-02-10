@@ -405,7 +405,7 @@ def start_video_player():
                 if max_people_reached():
                     video_player.hide_video()
                 t = threading.Event()
-                t.wait(video_player.is_playing() is False)
+                t.wait()
                 sleep(3)
                 #sleep(duration_of_video)
         else:
