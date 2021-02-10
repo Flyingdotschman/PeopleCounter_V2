@@ -401,7 +401,7 @@ def start_video_player():
                 except:
                     duration_of_video = 3
                     print("duration of video failed", flush=True)
-                video_player.exitEvent += stopvideoplayrt
+                video_player.exitEvent += exitvideoplayrt
                 video_player.stopEvent += stopvideoplayrt
                 print(duration_of_video, flush=True)
                 video_player.mute()
@@ -417,6 +417,12 @@ def start_video_player():
 def stopvideoplayrt(*args):
     global video_sny
     print("Stop videoplayer was alled")
+    video_sny.set()
+
+
+def exitvideoplayrt(*args):
+    global video_sny
+    print("exit videoplayer was alled")
     video_sny.set()
 
 
