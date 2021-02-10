@@ -389,7 +389,7 @@ def start_video_player():
                     video_player = OMXPlayer(filey,
                                              args=['--orientation', '270', '--win', '1312,0,1920,1080', '--no-osd',
                                                    '--vol',
-                                                   '-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1',exitEvent=t.set)
+                                                   '-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
 
                 else:
                     video_player.load(filey)
@@ -399,7 +399,7 @@ def start_video_player():
                 except:
                     duration_of_video = 3
                     print("duration of video failed", flush=True)
-
+                video_player.exitEvent += t.set()
                 print(duration_of_video, flush=True)
                 video_player.mute()
                 if max_people_reached():
