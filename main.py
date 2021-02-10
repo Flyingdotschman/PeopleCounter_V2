@@ -408,6 +408,8 @@ def start_video_player():
                     video_player.hide_video()
 
                 sleep(duration_of_video)
+            else:
+                break
         else:
             break
 
