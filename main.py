@@ -399,7 +399,7 @@ def start_video_player():
                 except:
                     duration_of_video = 3
                     print("duration of video failed", flush=True)
-                video_player.exitEvent += t.set()
+                video_player.exitEvent += t.set
                 print(duration_of_video, flush=True)
                 video_player.mute()
                 if max_people_reached():
