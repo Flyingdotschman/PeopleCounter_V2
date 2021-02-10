@@ -375,7 +375,7 @@ def start_video_player():
             if os.path.exists(file_list[index_video]):
                 filey = file_list[index_video]
                 print("VIDEO Playing {}".format(filey), flush=True)
-
+                t = threading.Event()
                 index_video = index_video + 1
                 if index_video > len(file_list) - 1:
                     index_video = 0
@@ -389,7 +389,7 @@ def start_video_player():
                     video_player = OMXPlayer(filey,
                                              args=['--orientation', '270', '--win', '1312,0,1920,1080', '--no-osd',
                                                    '--vol',
-                                                   '-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1')
+                                                   '-10000000'], dbus_name='org.mpris.MeidlaPlayer2.omxplayer1',exitEvent=t.set)
 
                 else:
                     video_player.load(filey)
