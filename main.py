@@ -258,21 +258,19 @@ def send_counter_info(adress_send_to):
 def update_the_screen():
     global max_people_allowed, people_inside
     global mainCanvas, video_player
+
     print("Starte Screen zeichnen")
     if not max_people_reached():
-        mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
+        mainCanvas.itemconfigure(backgroud_stele, image=background_go)
         print("Background done")
-        mainCanvas.create_image((1080 / 2), (1312 + (1920 - 1312) / 2), image=logo, anchor=CENTER)
+        mainCanvas.itemconfigure(logo_bottom, image=logo, state='normal')
         print("Logo done")
-        my_text1 = 'PERSONEN'
-        mainCanvas.create_text(540, 1070, anchor=CENTER, text=my_text1, fill='white',
-                               font=('adineue PRO Bold', 80,'bold'),
-                               state='normal')
-        my_text3 = str(max_people_allowed)
-        mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font=('adineue PRO Bold', 80,'bold'), state='normal')
-        my_text3 = str(people_inside) + "/"
-        mainCanvas.create_text(540, 900, anchor=NE, text=my_text3, fill='white',  font=('adineue PRO Bold', 80, 'bold'),
-                               state='normal')
+        my_text = 'PERSONEN'
+        mainCanvas.itemconfigure(personen_text, text=my_text, state='normal')
+        my_text = str(max_people_allowed)
+        mainCanvas.itemconfigure(numbers_right, text=my_text, state='normal')
+        my_text = str(people_inside) + "/"
+        mainCanvas.itemconfigure(numbers_left, text=my_text, state='normal')
         print("Text done")
         try:
 
@@ -286,8 +284,12 @@ def update_the_screen():
             video_player.hide_video()
         except:
             pass
-        mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
-    root.update()
+        mainCanvas.itemconfigure(backgroud_stele, image=background_stop)
+        mainCanvas.itemconfigure(personen_text, state='hidden')
+        mainCanvas.itemconfigure(numbers_right, state='hidden')
+        mainCanvas.itemconfigure(numbers_left, state='hidden')
+
+    #root.update()
     print("Ende Screen zeichnen")
 
 # Starte Server
@@ -476,9 +478,19 @@ mainCanvas = Canvas(root)
 mainCanvas.pack(fill="both", expand=True)
 #root.after(3000, check_usb_stick_exists)
 root.after(2, starte_server_thread)
-mainCanvas.create_image(0, 0, image=background_stop, anchor="nw")
-# mainCanvas.create_image(1312+(1920-1312)/2, 1080/2, image=logo, anchor="center")
-# mainCanvas.create_image(50, 50, image=logo, anchor="center")
+backgroud_stele = mainCanvas.create_image(0, 0, image=background_go, anchor="nw")
+logo_bottom = mainCanvas.create_image((1080 / 2), (1312 + (1920 - 1312) / 2), image=logo, anchor=CENTER)
+my_text1 = 'PERSONEN'
+personen_text = mainCanvas.create_text(540, 1070, anchor=CENTER, text=my_text1, fill='white',
+                       font=('adineue PRO Bold', 80, 'bold'),
+                       state='normal')
+my_text3 = str(max_people_allowed)
+numbers_right = mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill='white', font=('adineue PRO Bold', 80, 'bold'),
+                       state='normal')
+my_text3 = str(people_inside) + "/"
+numbers_left = mainCanvas.create_text(540, 900, anchor=NE, text=my_text3, fill='white', font=('adineue PRO Bold', 80, 'bold'),
+                       state='normal')
+
 root.after(1, update_the_screen)
-# root.after(1, starte_video_player_thread)
+
 root.mainloop()
