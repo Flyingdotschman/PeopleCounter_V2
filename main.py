@@ -353,13 +353,13 @@ def addtolist(file, extensions=['.mp4']):
 
 
 def check_usb_stick_exists():
-    global index_video, first_time_video_played, videoplayerthread, file_list
+    global index_video, first_time_video_played, videoplayerthread
     print("Checking for USB", flush=True)
-    file_list = []
+
     direc = "/media/pi/"
     for f in os.listdir(direc):
         if len(os.listdir(direc + f)) > 0:
-           return True
+            return True
     return False
 
     # else:
@@ -430,7 +430,7 @@ def checkifvideoplayerisallive():
 
 
 def usb_video_handler():
-    global videoplayerthread, video_player
+    global videoplayerthread, video_player, file_list
 
     while True:
         print("usb_vide_handler Go")
@@ -439,6 +439,7 @@ def usb_video_handler():
         # tt = threading.Thread(target=start_video_player)
             # tt.start()
                 if not videoplayerthread.is_alive():
+                    file_list = []
                     walktree("/media/pi", addtolist)
                     print("Checking for mp4")
                     print("Videoplayer Dead, restarting")
