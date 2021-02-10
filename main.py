@@ -414,7 +414,7 @@ def start_video_player():
             break
 
 
-def stopvideoplayrt():
+def stopvideoplayrt(*args):
     global video_sny
     print("Stop videoplayer was alled")
     video_sny.set()
