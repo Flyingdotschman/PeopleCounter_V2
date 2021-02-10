@@ -370,7 +370,7 @@ def start_video_player():
     global file_list, video_player, index_video, first_time_video_played
     print("Laenge von Filelist: {}".format(len(file_list)))
     t = threading.currentThread()
-
+    index_video = 0
     while getattr(t, "running", True):
         if len(file_list) > 0:
             print("File exists: {}".format(os.path.exists(file_list[index_video])))
