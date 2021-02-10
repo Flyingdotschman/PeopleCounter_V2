@@ -353,7 +353,7 @@ def addtolist(file, extensions=['.mp4']):
 
 
 def check_usb_stick_exists():
-    global index_video, first_time_video_played, videoplayerthread
+    global index_video, first_time_video_played, videoplayerthread, file_list
     print("Checking for USB", flush=True)
     file_list = []
     direc = "/media/pi/"
