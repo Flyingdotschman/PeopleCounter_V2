@@ -68,7 +68,7 @@ first_time_video_played = True
 
 video_player = []
 
-video_sny = threading.Event()
+
 
 keyboard = Controller()
 mouse = Mouse()
@@ -367,7 +367,7 @@ def check_usb_stick_exists():
 
 
 def start_video_player():
-    global file_list, video_player, index_video, first_time_video_played, video_sny
+    global file_list, video_player, index_video, first_time_video_played,
     print("Laenge von Filelist: {}".format(len(file_list)))
     t = threading.currentThread()
 
@@ -401,29 +401,15 @@ def start_video_player():
                 except:
                     duration_of_video = 3
                     print("duration of video failed", flush=True)
-                video_player.exitEvent += exitvideoplayrt
-                video_player.stopEvent += stopvideoplayrt
+
                 print(duration_of_video, flush=True)
                 video_player.mute()
                 if max_people_reached():
                     video_player.hide_video()
-                video_sny.wait()
-                sleep(3)
-                #sleep(duration_of_video)
+
+                sleep(duration_of_video)
         else:
             break
-
-
-def stopvideoplayrt(*args):
-    global video_sny
-    print("Stop videoplayer was alled")
-    video_sny.set()
-
-
-def exitvideoplayrt(*args):
-    global video_sny
-    print("exit videoplayer was alled")
-    video_sny.set()
 
 
 def starte_server_thread():
