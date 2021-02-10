@@ -429,23 +429,25 @@ def usb_video_handler():
 
     while True:
         print("usb_vide_handler Go")
-        if check_usb_stick_exists():
-    # tt = threading.Thread(target=start_video_player)
-        # tt.start()
-            if not videoplayerthread.is_alive():
-                walktree("/media/pi", addtolist)
-                print("Checking for mp4")
-                print("Videoplayer Dead, restarting")
-                first_time_video_played = True
-                index_video = 0
-                videoplayerthread = threading.Thread(target=start_video_player)
-                videoplayerthread.start()
-        else:
-            if videoplayerthread.is_alive():
-                print("Trying to Stop Video")
-                video_player.quit()
-                videoplayerthread.running = False
-
+        try:
+            if check_usb_stick_exists():
+        # tt = threading.Thread(target=start_video_player)
+            # tt.start()
+                if not videoplayerthread.is_alive():
+                    walktree("/media/pi", addtolist)
+                    print("Checking for mp4")
+                    print("Videoplayer Dead, restarting")
+                    first_time_video_played = True
+                    index_video = 0
+                    videoplayerthread = threading.Thread(target=start_video_player)
+                    videoplayerthread.start()
+            else:
+                if videoplayerthread.is_alive():
+                    print("Trying to Stop Video")
+                    video_player.quit()
+                    videoplayerthread.running = False
+        except:
+            print("Something went wrong with the usb or videplayer, going to retry now")
         sleep(1)
 
 
