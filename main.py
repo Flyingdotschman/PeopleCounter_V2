@@ -68,6 +68,8 @@ first_time_video_played = True
 
 video_player = []
 
+video_sny = threading.Event()
+
 keyboard = Controller()
 mouse = Mouse()
 mouse.position = (10000, 10000)
@@ -365,7 +367,7 @@ def check_usb_stick_exists():
 
 
 def start_video_player():
-    global file_list, video_player, index_video, first_time_video_played
+    global file_list, video_player, index_video, first_time_video_played, video_sny
     print("Laenge von Filelist: {}".format(len(file_list)))
     t = threading.currentThread()
 
@@ -399,18 +401,22 @@ def start_video_player():
                 except:
                     duration_of_video = 3
                     print("duration of video failed", flush=True)
-                video_player.exitEvent += t.set
-                video_player.stopEvent += t.set
+                video_player.exitEvent += stopvideoplayrt
+                video_player.stopEvent += stopvideoplayrt
                 print(duration_of_video, flush=True)
                 video_player.mute()
                 if max_people_reached():
                     video_player.hide_video()
-                t = threading.Event()
-                t.wait()
+                video_sny.wait()
                 sleep(3)
                 #sleep(duration_of_video)
         else:
             break
+
+
+def stopvideoplayrt():
+    global video_sny
+    video_sny.set()
 
 
 def starte_server_thread():
@@ -497,6 +503,8 @@ numbers_right = mainCanvas.create_text(540, 900, anchor=NW, text=my_text3, fill=
 my_text3 = str(people_inside) + "/"
 numbers_left = mainCanvas.create_text(540, 900, anchor=NE, text=my_text3, fill='white', font=('adineue PRO Bold', 80, 'bold'),
                        state='normal')
+
+
 
 root.after(1, update_the_screen)
 
