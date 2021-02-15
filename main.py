@@ -407,6 +407,7 @@ def start_video_player():
                 if max_people_reached():
                     video_player.hide_video()
                 video_player.play_sync()
+                sleep(3)
                 #sleep(duration_of_video)
             else:
                 break
